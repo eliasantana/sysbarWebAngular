@@ -1,0 +1,115 @@
+<h3>Cadastro de Cargos</h3>
+<form [formGroup]="formularioCargo">
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td colspan="4">
+          <mat-form-field class="ocultarId">
+            <input matInput>
+          </mat-form-field>
+          <mat-form-field class="larguraCampos">
+              <mat-label>Nome do Cargo</mat-label>
+              <input matInput placeholder="Informe a descrção" formControlName="dscargo">
+          </mat-form-field>
+        </td>        
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="larguraCampos">
+              <mat-label>Sal. Bruto</mat-label>
+              <input type="number" maxlength="5" #salminimo matInput placeholder="Infrome o Salário Bruto" formControlName="vlbruto">
+              <mat-hint align="start">Informe o salário  sem casas decimal {{salminimo.value.length}} / 5</mat-hint>              
+          </mat-form-field> 
+        </td>
+        <td>
+          <mat-form-field class="larguraCampos">
+            <mat-label>Sal. Liquido</mat-label>
+            <input type="number" maxlength="5" #salliquido matInput placeholder="Infrome o Salário Liquido" formControlName="vlliquido">
+            <mat-hint align="start">Informe o salário sem casas decimal. {{salliquido.value.length}} / 5 </mat-hint>            
+          </mat-form-field>      
+        </td>
+        <td>
+          <mat-form-field class="larguraCampos">
+            <mat-label>Valor.INSS</mat-label>
+            <input type="number" maxlength="5" #inss matInput placeholder="Infrome o Salário Liquido" formControlName="vlinss">
+            <mat-hint align="start">Informe o valor do Inss sem casas decimais {{inss.value.length}} / 5</mat-hint>            
+          </mat-form-field>
+        </td>
+
+        <td>
+          <mat-form-field class="larguraCampos">
+            <mat-label>Valor.INSS</mat-label>
+            <input type="number" maxlength="5" #inss matInput placeholder="Infrome o FGTS " formControlName="vlfgts">
+            <mat-hint align="start">Informe o valor do FGTS sem casas decimais {{inss.value.length}} / 5</mat-hint>            
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="larguraCampos">
+          <mat-label>Ativo?</mat-label>
+          <mat-select formControlName="snativo">
+            <mat-option value="S">Sim</mat-option>
+            <mat-option value="N">Não</mat-option>
+          </mat-select>
+          <mat-hint align="end">clique na seta para selecionar^</mat-hint>
+          </mat-form-field>
+        </td>
+      </tr>      
+    </table>     
+    <div class="botoes">        
+      @if(btnCadastrar){
+        <button matButton="elevated" class="espacamentoBotao" (click)="cadastrar()">Cadastrar</button>            
+    }@else {
+        <button matButton="elevated" class="espacamentoBotao" (click)="excluirCargo(idCargoSelecionado.toString())">Remover</button>
+        <button matButton="elevated" class="espacamentoBotao" (click)="limparFomulario()" >Limpar</button>
+    }
+    </div>   
+</form>
+<mat-form-field class="barraDePesquisa">    
+  <mat-label>Pesquisar</mat-label>
+  <input matInput (keyup)="filtro($event)" placeholder="Digite aqui.." #input>
+</mat-form-field>
+
+<table mat-table [dataSource]="vetor" class="mat-elevation-z8">
+    <!-- ID -->
+   <ng-container matColumnDef="cdcargo">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let cargo"> {{cargo.cdcargo}} </td>
+  </ng-container>
+
+  <!--Descrição -->
+  <ng-container matColumnDef="dscargo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </th>
+    <td mat-cell *matCellDef="let cargo">{{cargo.dscargo}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="vlbruto">
+    <th mat-header-cell *matHeaderCellDef> Sal. Bruto </th>
+    <td mat-cell *matCellDef="let cargo"> {{cargo.vlbruto }} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="vlliquido">
+    <th mat-header-cell *matHeaderCellDef> Sal. Liquido </th>
+    <td mat-cell *matCellDef="let cargo"> {{cargo.vlliquido}} </td>
+  </ng-container>
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="vlinss">
+    <th mat-header-cell *matHeaderCellDef> INSS </th>
+    <td mat-cell *matCellDef="let cargo"> {{cargo.vlinss}} </td>
+  </ng-container>
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="vlfgts">
+    <th mat-header-cell *matHeaderCellDef> fgts </th>
+    <td mat-cell *matCellDef="let cargo"> {{cargo.vlfgts}} </td>
+  </ng-container>
+  <ng-container matColumnDef="snativo">
+    <th mat-header-cell *matHeaderCellDef> Ativo? </th>    
+    <td mat-cell *matCellDef="let cargo"> 
+        <mat-checkbox  [checked]="cargo.snativo === 'S'"  [disabled]="true" > <!-- Deixei disabled para apenas exibir, tire se for para editar -->   </mat-checkbox>
+        <button matButton="elevated" class="espacamentoBotao" (click)="selecionar(cargo.cdcargo)">Selecionar</button>
+    </td>
+  </ng-container>   
+  <!--Nome das colunas-->
+  <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+  <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+</table>
