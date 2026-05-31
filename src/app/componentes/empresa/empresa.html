@@ -1,0 +1,155 @@
+<div class="container-formulario">
+    <div class="formulario">
+        <h1>Cadastro de Empresa</h1>
+        <form [formGroup]="formularioEmpresa">
+            <mat-form-field class="pequeno id">
+                <mat-label>ID</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field class="medio">
+                <mat-label>Nome da Empresa</mat-label>
+                <input matInput placeholder="Nome da Empresa" formControlName="nomeEmpresa">
+                @if(formularioEmpresa.get('nomeEmpresa')?.hasError('requerid') && formularioEmpresa.get('nomeEmpresa')?.touched){
+                    <small>Nome da empresa é obrigatório!</small>
+                }
+                @if(formularioEmpresa.get('nomeEmpresa')?.hasError('minlength') && formularioEmpresa.get('nomeEmpresa')?.touched){
+                    <small>O nome da Empresa deve ter no mínimo 5 caracteres!</small>
+                }
+            </mat-form-field>
+            <mat-form-field class="medio">
+                <mat-label>Endereço</mat-label>
+                <input matInput placeholder="Informe o Endreço" formControlName="endereco">
+            </mat-form-field>
+            <mat-form-field class="pequeno">
+                <mat-label>Numero</mat-label>
+                <input type="number" matInput formControlName="numero">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Bairro</mat-label>
+                <input type="text" matInput placeholder="Bairro" formControlName="bairro">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>CEP</mat-label>
+                <input type="text" matInput placeholder="CEP" mask="99999-000" formControlName="cep">
+            </mat-form-field>
+            <mat-form-field class="medio">
+                <mat-label>Cidade</mat-label>
+                <input type="text" matInput formControlName="cidade">
+            </mat-form-field>
+            <mat-form-field class="pequeno">
+                <mat-label>UF</mat-label>
+                <mat-select formControlName="uf">
+                    <mat-option value="AC">AC</mat-option>
+                    <mat-option value="AL">AL</mat-option>
+                    <mat-option value="AP">AP</mat-option>
+                    <mat-option value="AM">AM</mat-option>
+                    <mat-option value="BA">BA</mat-option>
+                    <mat-option value="CE">CE</mat-option>
+                    <mat-option value="DF">DF</mat-option>
+                    <mat-option value="ES">ES</mat-option>
+                    <mat-option value="GO">GO</mat-option>
+                    <mat-option value="MA">MA</mat-option>
+                    <mat-option value="MT">MT</mat-option>
+                    <mat-option value="MS">MS</mat-option>
+                    <mat-option value="MG">MG</mat-option>
+                    <mat-option value="PA">PA</mat-option>
+                    <mat-option value="PB">PB</mat-option>
+                    <mat-option value="PR">PR</mat-option>
+                    <mat-option value="PE">PE</mat-option>
+                    <mat-option value="PI">PI</mat-option>
+                    <mat-option value="RJ">RJ</mat-option>
+                    <mat-option value="RN">RN</mat-option>
+                    <mat-option value="RS">RS</mat-option>
+                    <mat-option value="RO">RO</mat-option>
+                    <mat-option value="RR">RR</mat-option>
+                    <mat-option value="SC">SC</mat-option>
+                    <mat-option value="SP">SP</mat-option>
+                    <mat-option value="SE">SE</mat-option>
+                    <mat-option value="TO">TO</mat-option>
+                </mat-select>
+                <mat-hint align="end">Clique aqui ^</mat-hint>
+            </mat-form-field>
+            <mat-form-field class="medio2">
+                <mat-label>Telefone</mat-label>
+                <input type="text" matInput mask="(99) 99999-9999" formControlName="telefone">
+            </mat-form-field>
+            <mat-form-field class="medio2">
+                <mat-label>Celular</mat-label>
+                <input type="text" matInput mask="(99) 99999-9999" formControlName="celular">
+            </mat-form-field>            
+            <mat-form-field class="medio3">
+                <mat-label>e-mail</mat-label>
+                <input type="email" matInput placeholder="ex:email@gmail.com.br" formControlName="email">
+            </mat-form-field>            
+            <mat-form-field class="medio3">
+                <mat-label>Adicione sua logo aqui</mat-label>
+                <input type="text" matInput formControlName="logo">
+            </mat-form-field>
+            <mat-form-field class="medio3">
+                <mat-label>CNPJ</mat-label>
+                <input type="text" matInput mask="99.999.999/9999-99" formControlName="cnpj">
+            </mat-form-field>
+            <mat-form-field class="medio3">
+                <mat-label>Local de Backup </mat-label>
+                <input type="text" matInput formControlName="localBackup">
+            </mat-form-field>
+            <mat-form-field class="medio">
+                <mat-label>Chave de Licença</mat-label>
+                <input type="text" matInput formControlName="chaveLicenca">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Selecione uma data</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dtCadastro">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+              <button type="button" matButton="elevated" (click)="picker.open()">Selecione</button>
+            <mat-form-field class="medio">
+                <mat-label>Complemento</mat-label>
+                <input type="text" matInput formControlName="complemento">
+            </mat-form-field>
+            <mat-form-field class="pequeno">
+                <mat-label>Backup?</mat-label>
+                <mat-select formControlName="snBackupAuto">
+                    <mat-option value="S">Sim</mat-option>
+                    <mat-option value="N">Não</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="pequeno">
+                <mat-label>Ativar Delivery?</mat-label>
+                <mat-select formControlName="snAtivaDelivery">
+                    <mat-option value="S">Sim</mat-option>
+                    <mat-option value="N">Não</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="pequeno">
+                <mat-label>Ativar Cozinha?</mat-label>
+                <mat-select formControlName="snAtivaCozinha">
+                    <mat-option value="S">Sim</mat-option>
+                    <mat-option value="N">Não</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="pequeno">
+                <mat-label>Empresa Ativa?</mat-label>
+                <mat-select formControlName="snAtivo">
+                    <mat-option value="S">Sim</mat-option>
+                    <mat-option value="N">Não</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="medio2">
+                <mat-label>Teto Desconto (%)</mat-label>
+                <input type="number" matInput formControlName="tetoDesconto">
+            </mat-form-field>
+        </form>
+        <div class="botoes">
+            @if (btnCadastrar) {
+                <button type="button" matButton="elevated" (click)="cadastrar()">Cadastrar</button>
+            }@else{
+                <button type="button" matButton="elevated">Excluir</button>
+                <button type="button" matButton="elevated" (click)="limparFormulario()">Limpar</button>                
+            }            
+        </div>
+        
+    </div>
+
+</div>

@@ -1,0 +1,36 @@
+.container-formulario{
+    display: flex;
+    justify-content: center;
+}
+mat-form-field{
+    margin-left: 10px;
+    
+}
+.formulario{
+    margin: 20px auto;
+    align-items: center;
+}
+.medio{
+    width: 50%;
+}
+.medio2{
+    width: 12%;
+}
+.medio3{
+    width: 17%;
+}
+.pequeno{
+    width: 10%;
+}
+
+.id{
+    display: none;
+}
+h1{
+    display: flex;
+    justify-content: center;
+}
+.botoes{
+    display: flex;
+    justify-content: center;
+}

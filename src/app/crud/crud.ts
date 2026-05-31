@@ -10,13 +10,14 @@ import { MatPseudoCheckboxModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 
 @Component({  
   selector: 'app-crud',
   standalone: true,
+  
   imports: [CommonModule, 
             MatButtonModule,
             MatFormFieldModule, 
@@ -25,23 +26,27 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
             MatPseudoCheckboxModule, 
             MatCheckboxModule, 
             MatSelectModule,
-          MatIconModule, ReactiveFormsModule],
+            MatIconModule, 
+            ReactiveFormsModule, 
+            NgxMaskDirective],
+  providers:[provideNgxMask()],
   templateUrl: './crud.html',
   styleUrl: './crud.css',
 })
 export class Crud {
   cargos:Cargo[]=[];
-  //Controlar a visibilidade dos Botões
+  mensagem:string='';
+  
   //Variárvel criada par receber dados do formulário reativo
   formularioCargo = new FormGroup({    
-    dscargo: new FormControl(''),
-    vlbruto: new FormControl(''),
-    vlliquido: new FormControl(''),
-    vlinss:new FormControl(''),
-    vlfgts:new FormControl(''),
-    snativo:new FormControl('')
+    dscargo: new FormControl('', [Validators.required]),
+    vlbruto: new FormControl('',[Validators.required]),
+    vlliquido: new FormControl('',Validators.required),
+    vlinss:new FormControl('',Validators.required),
+    vlfgts:new FormControl('',Validators.required),
+    snativo:new FormControl('',Validators.required)
   });
-
+  //Controlar a visibilidade dos Botões
   btnCadastrar:boolean=true;
   idCargoSelecionado:number=0;
   
@@ -52,20 +57,17 @@ export class Crud {
   ngOnInit(){
       this.listar();
   }
- 
-  colunas:string[]=['cdcargo','dscargo','vlbruto','vlliquido','vlinss','vlfgts','snativo'];
   
-   
+colunas:string[]=['cdcargo','dscargo','vlbruto','vlliquido','vlinss','vlfgts','snativo'];   
   
   //Vetor que armazenara os dados dos cargos listados
-  vetor=new MatTableDataSource<any>();
+vetor=new MatTableDataSource<any>();
 
   //Filtar dados da tabela  
-  filtro(event:Event){
+filtro(event:Event){
       const filterValue = (event.target as HTMLInputElement).value;
       this.vetor.filter=filterValue.trim().toLowerCase();
-  }
-
+}
 
 listar():void{
   this.servico.listar().subscribe({
@@ -79,27 +81,26 @@ listar():void{
   });
 }
 
-
-  cadastrar():void{
-    //Capturando dados do formulário    
-    const dadosFormulario = this.formularioCargo.getRawValue();
-    
+cadastrar():void{
+//Capturando dados do formulário    
+const dadosFormulario = this.formularioCargo.getRawValue();
+if(this.formularioCargo.invalid){      
+    alert('Dados Inválido! Por favor revise os dados informados!');
+}else{
     console.log('Dados enviados ao servidor ', dadosFormulario);
-
-    this.servico.enviar(dadosFormulario).subscribe({
-        next:(dadosSalvo) => {
-            alert('Cargo cadastrado com sucesso!');
-            this.formularioCargo.reset();
-            this.listar();
-        },
-        error:(erro) => {
-            console.error('Erro ao cadastrar cargo ', erro);
-            alert('Erro ao tentar cadastrar o cargo');
-            this.formularioCargo.reset();
-        }
-        
-    });
-
+      this.servico.enviar(dadosFormulario).subscribe({
+          next:(dadosSalvo) => {
+              alert('Cargo cadastrado com sucesso!');
+              this.formularioCargo.reset();
+              this.listar();
+          },
+          error:(erro) => {
+              console.error('Erro ao cadastrar cargo ', erro);
+              alert('Erro ao tentar cadastrar o cargo');
+              this.formularioCargo.reset();
+          }            
+      });
+    }
   }
 
   excluirCargo(id:string):void{
@@ -107,6 +108,7 @@ listar():void{
         next:()=>{
           alert('Dados Excluídos com Sucesso!');
           this.listar();
+          this.limparFomulario();
         },
         error:(erro) =>{
             alert('Erro ao tentar excluir o cargo.');
@@ -130,5 +132,7 @@ listar():void{
     this.formularioCargo.reset();
     this.btnCadastrar=true;
   }
+
+  
 
 }

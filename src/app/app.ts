@@ -1,10 +1,13 @@
 import { Component, signal } from '@angular/core';
-import { Crud } from "./crud/crud";
-import { TabelaCargos } from './tabela-cargos/tabela-cargos';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { RouterOutlet } from "@angular/router";
+
+
 
 @Component({
   selector: 'app-root',
-  imports: [Crud],
+  imports: [MatButtonModule, MatSidenavModule, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

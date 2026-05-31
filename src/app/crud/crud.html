@@ -1,36 +1,49 @@
-<h3>Cadastro de Cargos</h3>
+<h1>Cadastro de Cargos</h1>
 <form [formGroup]="formularioCargo">
     <table class="example-full-width" cellspacing="0">
       <tr>
         <td colspan="4">
           <mat-form-field class="ocultarId">
             <input matInput>
-          </mat-form-field>
-          <mat-form-field class="larguraCampos">
-              <mat-label>Nome do Cargo</mat-label>
-              <input matInput placeholder="Informe a descrção" formControlName="dscargo">
-          </mat-form-field>
+          </mat-form-field>          
+          <mat-form-field class="larguraCampos">                      
+            <mat-label>Nome do Cargo</mat-label>             
+              <input matInput placeholder="Informe a descrição" formControlName="dscargo">              
+          </mat-form-field>          
         </td>        
       </tr>
       <tr>
         <td>
           <mat-form-field class="larguraCampos">
               <mat-label>Sal. Bruto</mat-label>
-              <input type="number" maxlength="5" #salminimo matInput placeholder="Infrome o Salário Bruto" formControlName="vlbruto">
+              <input type="text" #salminimo matInput placeholder="Infrome o Salário Bruto" 
+                      formControlName="vlbruto" 
+                      mask="separator.2" 
+                      thousandSeparator="." 
+                      prefix="R$"
+                      decimalMarker=",">
               <mat-hint align="start">Informe o salário  sem casas decimal {{salminimo.value.length}} / 5</mat-hint>              
           </mat-form-field> 
         </td>
         <td>
           <mat-form-field class="larguraCampos">
             <mat-label>Sal. Liquido</mat-label>
-            <input type="number" maxlength="5" #salliquido matInput placeholder="Infrome o Salário Liquido" formControlName="vlliquido">
+            <input type="text"  #salliquido matInput placeholder="Infrome o Salário Liquido" formControlName="vlliquido"
+                      mask="separator.2" 
+                      thousandSeparator="." 
+                      prefix="R$"
+                      decimalMarker=",">
             <mat-hint align="start">Informe o salário sem casas decimal. {{salliquido.value.length}} / 5 </mat-hint>            
           </mat-form-field>      
         </td>
         <td>
           <mat-form-field class="larguraCampos">
             <mat-label>Valor.INSS</mat-label>
-            <input type="number" maxlength="5" #inss matInput placeholder="Infrome o Salário Liquido" formControlName="vlinss">
+            <input type="text" #inss matInput placeholder="Infrome o Salário Liquido" formControlName="vlinss"
+                      mask="separator.2" 
+                      thousandSeparator="." 
+                      prefix="R$"
+                      decimalMarker=",">
             <mat-hint align="start">Informe o valor do Inss sem casas decimais {{inss.value.length}} / 5</mat-hint>            
           </mat-form-field>
         </td>
@@ -38,7 +51,11 @@
         <td>
           <mat-form-field class="larguraCampos">
             <mat-label>Valor.INSS</mat-label>
-            <input type="number" maxlength="5" #inss matInput placeholder="Infrome o FGTS " formControlName="vlfgts">
+            <input type="text" #inss matInput placeholder="Infrome o FGTS " formControlName="vlfgts"
+                      mask="separator.2" 
+                      thousandSeparator="." 
+                      prefix="R$"
+                      decimalMarker=",">
             <mat-hint align="start">Informe o valor do FGTS sem casas decimais {{inss.value.length}} / 5</mat-hint>            
           </mat-form-field>
         </td>
@@ -54,6 +71,7 @@
         </td>
       </tr>      
     </table>     
+    
     <div class="botoes">        
       @if(btnCadastrar){
         <button matButton="elevated" class="espacamentoBotao" (click)="cadastrar()">Cadastrar</button>            

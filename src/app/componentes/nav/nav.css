@@ -1,0 +1,16 @@
+.container{
+    height: 100%;
+}
+.icone-grande {
+    width: 50px;
+    height: 50px;
+    color: black;
+    border-radius: 20px 20px 20px 20px ;
+  }
+.sidenav{
+    background-color: rgb(185, 185, 204);
+    color: white;
+}
+a mat-icon{    
+    color: white;
+}
