@@ -33,4 +33,5 @@ h1{
 .botoes{
     display: flex;
     justify-content: center;
+    gap: 5px;
 }

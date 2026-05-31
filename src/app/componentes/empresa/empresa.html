@@ -144,8 +144,10 @@
         <div class="botoes">
             @if (btnCadastrar) {
                 <button type="button" matButton="elevated" (click)="cadastrar()">Cadastrar</button>
+                <button type="button" matButton="elevated"  routerLink="/pesquisar">
+                    <mat-icon aria-hidden="false" aria-label="pesquisasr" fontIcon="search"></mat-icon>Pesquisar
+                </button>
             }@else{
-                <button type="button" matButton="elevated">Excluir</button>
                 <button type="button" matButton="elevated" (click)="limparFormulario()">Limpar</button>                
             }            
         </div>

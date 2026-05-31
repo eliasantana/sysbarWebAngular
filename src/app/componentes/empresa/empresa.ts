@@ -9,6 +9,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import { EmpresaServices } from 'src/app/services/empresa-services';
 import { AngularJSUrlCodec } from '@angular/common/upgrade';
+import { MatIcon } from "@angular/material/icon";
+import { RouterLink } from "@angular/router";
 
 
 
@@ -19,7 +21,7 @@ import { AngularJSUrlCodec } from '@angular/common/upgrade';
     MatInputModule,
     ReactiveFormsModule,
     NgxMaskDirective,
-    MatSelectModule, MatDatepickerModule, MatDatepicker, MatButtonModule],
+    MatSelectModule, MatDatepickerModule, MatDatepicker, MatButtonModule, MatIcon, RouterLink],
   providers:[provideNgxMask(), provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './empresa.html',
@@ -75,7 +77,7 @@ export class Empresa {
            }           
       });
         
-      this.btnCadastrar=false;
+      this.btnCadastrar=true;
       
       console.log('Dados enviados ao servidor!');
       console.log(this.formularioEmpresa.value);
