@@ -1,45 +1,55 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { EmpresaServices } from 'src/app/services/empresa-services';
+import {  MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,  
+  MatDialogModule,  
+  MatDialogTitle
+} from '@angular/material/dialog';
+import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
+import { Empresa } from '../empresa';
 
 @Component({
   selector: 'app-pesquisar',
-  imports: [MatTableModule],
+  imports: [MatTableModule,
+    MatIconModule,
+    MatButtonModule,MatDialogModule, MatInputModule, MatFormFieldModule, FormsModule
+     ],
   templateUrl: './pesquisar.html',
   styleUrl: './pesquisar.css',
 })
+
 export class Pesquisar {
 
   constructor(private service:EmpresaServices){}
-
+ 
+  private dialog = inject(MatDialog);
+ 
   colunas=[]=['cdEmpresa',
-              'nomeEmpresa',
-              'endereco',
-              'numero',
-              'bairro',
-              'cep',
-              'cidade',
-              'uf',
+              'nomeEmpresa',              
               'telefone',
               'celular',
               'email',
-              'logo',
-              'cnpj',
-              'localBackup',
-              'chaveLicenca',
-              'dtCadastro',
-              'complemento',
-              'snBackupAuto',
-              'snAtivaDelivery',
-              'snAtivaCozinha',
-              'snAtivo',
-              'tetoDesconto'
+              'tetoDesconto','acao'
             ];
 
-            vetor=new MatTableDataSource<any>();
+  vetor=new MatTableDataSource<any>();
   
     ngOnInit(){
       this.listar();
+    }
+
+    filtro(event:Event){
+      const filtroValue = (event.target as HTMLInputElement).value;
+      this.vetor.filter=filtroValue.trim().toLowerCase();
     }
 
     listar():void{
@@ -49,6 +59,33 @@ export class Pesquisar {
               console.log('Dados Carregados com sucesso!');
           }
         });
+    }
+
+   
+    confirma(empresa:any):void{
+      const dialogRef = this.dialog.open(ConfirmeDialog,{
+          width:'400px',
+          data:{
+            titulo:'Confirma a Excelusão?',
+            mensagem:`Deseja realmente excluir a empresa ${empresa.nomeEmpresa}?`
+          }
+      });
+
+      dialogRef.afterClosed().subscribe((confirmado:boolean) =>{
+          if (confirmado){
+            console.log(`Excluindo a empresa ${empresa.cdEmpresa}`);
+            this.service.excluir(empresa.cdEmpresa).subscribe({
+              next:()=>{
+                console.log("Empresa excluida ")
+                this.listar();
+              },
+              error:(erro)=>{
+                alert('erro ao tentar excluir a empresa!');
+              }
+            });
+          }
+      });
+
     }
 
 }

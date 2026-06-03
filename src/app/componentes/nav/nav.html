@@ -18,22 +18,18 @@
         </a>
         <a mat-list-item routerLink="/">
             <mat-icon fontIcon="home"></mat-icon>Home
-        </a>
-       
-      </mat-nav-list>
-     
-    </mat-drawer>
-    
+        </a>       
+      </mat-nav-list>     
+    </mat-drawer>    
     <div class="sidenav-content">
         <div class="button-row">
-            <div class="flex-container">
-                <button type="button"  matButton="elevated" class="icone-grande" (click)="drawer.toggle()">      
-                    <mat-icon>menu</mat-icon>         
+            <div class="flex-container">                
+                <button type="button"  matButton="elevated"  (click)="drawer.toggle()">      
+                    <mat-icon>menu</mat-icon> Menu        
                 </button>
                 <router-outlet></router-outlet>
             </div>
         </div>
-    </div>
-  
+    </div>  
   </mat-drawer-container>
   

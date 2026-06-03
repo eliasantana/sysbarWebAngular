@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
   selector: 'app-nav',
-  imports: [MatDrawerContainer, MatDrawer, MatSidenavModule, MatButtonModule, MatIconModule, MatListModule, RouterOutlet, RouterLink],
+  imports: [MatDrawerContainer, MatDrawer, MatSidenavModule, MatButtonModule, MatIconModule, MatListModule, RouterOutlet, RouterLink, MatFormFieldModule],
   templateUrl: './nav.html',
   styleUrl: './nav.css',
 })
