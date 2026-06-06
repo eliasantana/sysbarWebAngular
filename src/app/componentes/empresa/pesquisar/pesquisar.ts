@@ -15,7 +15,7 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
-import { Empresa } from '../empresa';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pesquisar',
@@ -32,13 +32,17 @@ export class Pesquisar {
   constructor(private service:EmpresaServices){}
  
   private dialog = inject(MatDialog);
- 
+  private route=inject(Router);
+
+  
   colunas=[]=['cdEmpresa',
               'nomeEmpresa',              
               'telefone',
               'celular',
               'email',
-              'tetoDesconto','acao'
+              'tetoDesconto',
+              'snAtivo',
+              'acao'
             ];
 
   vetor=new MatTableDataSource<any>();
@@ -86,6 +90,20 @@ export class Pesquisar {
           }
       });
 
+    }
+
+    selecionar(id:number):void{
+      this.service.localizar(id).subscribe({
+        next:(empresa)=>{
+           console.log(empresa);
+           //repassando a rota e mandando a empresa localizada no state.
+           this.route.navigate(['/empresa'],{
+                state:{'dadosempresa':empresa}
+           });
+        },error:(erro)=>{
+          alert('Erro ao localizar a empresa informada!');
+        }
+      })
     }
 
 }

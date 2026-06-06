@@ -1,0 +1,13 @@
+body{
+    margin: 0 0 0 0;
+}
+p{    
+    display: flex;
+    margin: 0 0 0 0;
+    height: 80px;
+    background-color: rgb(83, 83, 134);
+   
+}
+.textoMenu{
+    color: white;
+}

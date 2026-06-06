@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -11,6 +11,7 @@ import { EmpresaServices } from 'src/app/services/empresa-services';
 import { AngularJSUrlCodec } from '@angular/common/upgrade';
 import { MatIcon } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
+import { Router } from '@angular/router';
 
 
 
@@ -27,9 +28,13 @@ import { RouterLink } from "@angular/router";
   templateUrl: './empresa.html',
   styleUrl: './empresa.css',
 })
-export class Empresa {
+export class Empresa implements OnInit {
 
   btnCadastrar:boolean=true;
+  private route = inject(Router);
+  //Avisando ao angular que ouve mudança nos dados 
+  private cdr = inject(ChangeDetectorRef);
+  private dadosREcebidos:any=null;
 
   formularioEmpresa = new FormGroup({
     cdEmpresa: new FormControl(''),
@@ -56,11 +61,27 @@ export class Empresa {
     tetoDesconto:new FormControl('')
   });
 
-  constructor(private empresaService:EmpresaServices){}
+  ngOnInit(){
+    if(this.dadosREcebidos){      
+      this.formularioEmpresa.patchValue(this.dadosREcebidos);
+      this.cdr.markForCheck();
+    }
+  }
+  
+  constructor(private empresaService:EmpresaServices){
+    // FUNCIONA AQUI: Durante a construção do componente
+    const navegacao = this.route.getCurrentNavigation();
+    this.dadosREcebidos = navegacao?.extras.state?.['dadosempresa'];
+    
+  }
 
+
+  
   cadastrar():void{
     //Retorna todos os dados do formulário
     const formEmpresa = this.formularioEmpresa.getRawValue();
+    //Capturando o objeto enviado pelo state
+    
 
     if(this.formularioEmpresa.invalid){
       console.log('Dados Inválidos!');
@@ -68,7 +89,7 @@ export class Empresa {
 
       this.empresaService.adicionar(formEmpresa).subscribe({
           next:(dadosSalvos)=>{
-            alert('Dados enviados com sucesso!');
+            alert('Dados Cadastrados com sucesso!');
             this.limparFormulario();
           },          
            error:(erro)=>{
@@ -88,6 +109,7 @@ export class Empresa {
   limparFormulario(){
     this.formularioEmpresa.reset();
     this.btnCadastrar=true;
+    this.cdr.markForCheck();
   }
 
 }
