@@ -6,6 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {
   MatDialog,
   MatDialogActions,
@@ -16,12 +17,13 @@ import {
 } from '@angular/material/dialog';
 import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 import { Router } from '@angular/router';
+import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-pesquisar',
   imports: [MatTableModule,
     MatIconModule,
-    MatButtonModule,MatDialogModule, MatInputModule, MatFormFieldModule, FormsModule
+    MatButtonModule,MatDialogModule, MatInputModule, MatFormFieldModule, FormsModule,MatSlideToggleModule
      ],
   templateUrl: './pesquisar.html',
   styleUrl: './pesquisar.css',
@@ -33,6 +35,7 @@ export class Pesquisar {
  
   private dialog = inject(MatDialog);
   private route=inject(Router);
+  public selecionado:boolean=false;
 
   
   colunas=[]=['cdEmpresa',
@@ -105,5 +108,11 @@ export class Pesquisar {
         }
       })
     }
+    isAtivo(snAtivo:string):void{
+      if (snAtivo=='S'){
+        this.selecionado=true;
+      }
+    }
+    
 
 }

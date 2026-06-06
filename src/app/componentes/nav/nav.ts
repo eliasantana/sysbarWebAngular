@@ -8,6 +8,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import {MatMenuModule} from '@angular/material/menu';
 import { Topo } from "../topo/topo";
+import { Rodape } from '../rodape/rodape';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { Topo } from "../topo/topo";
     MatListModule,
     RouterOutlet,
     RouterLink,
-    MatFormFieldModule, MatMenuModule, Topo],
+    MatFormFieldModule, MatMenuModule, Topo, Rodape],
   templateUrl: './nav.html',
   styleUrl: './nav.css',
 })
