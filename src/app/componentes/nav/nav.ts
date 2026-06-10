@@ -9,6 +9,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import {MatMenuModule} from '@angular/material/menu';
 import { Topo } from "../topo/topo";
 import { Rodape } from '../rodape/rodape';
+import { LoginServices } from 'src/app/services/login-services';
 
 
 @Component({
@@ -25,4 +26,12 @@ import { Rodape } from '../rodape/rodape';
   templateUrl: './nav.html',
   styleUrl: './nav.css',
 })
-export class Nav {}
+export class Nav {
+
+  constructor(private loginService:LoginServices){}
+
+  logout(){
+    this.loginService.limparSessao();
+    console.log('sessão limpa')
+  }
+}

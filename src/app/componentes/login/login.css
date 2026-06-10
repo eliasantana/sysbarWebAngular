@@ -1,0 +1,54 @@
+body{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    place-items: center;
+    height: 100vh;    
+
+}
+.example-container {
+    background-image: url("https://png.pngtree.com/background/20230425/original/pngtree-bar-filled-with-glasses-and-bottles-picture-image_2475396.jpg");
+   
+    display: flex;
+    justify-content: center; /* horizontal */
+    align-items: center;     /* vertical */
+    height: 100vh;           /* ocupa toda a altura da tela */
+    flex-direction: column;
+    background-color:  rgb(236, 236, 241);;
+    
+}
+.campos{
+    width: 250px;
+}
+img{
+    width: 200px;
+    width: 200px;
+}
+.autenticacao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.back{   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(203, 203, 233);
+    width: 400px;
+    height: 500px;    
+    align-items: center;
+    border-radius: 20px;
+    opacity: 80%;
+}
+small{
+    color: red;
+}
+section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+

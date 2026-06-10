@@ -3,9 +3,12 @@ body{
 }
 p{    
     display: flex;
+    justify-content: right;
+    align-items: center;
     margin: 0 0 0 0;
     height: 80px;
     background-color: rgb(83, 83, 134);
+    color:white;
    
 }
 .textoMenu{

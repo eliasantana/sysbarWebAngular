@@ -100,7 +100,7 @@ export class Pesquisar {
         next:(empresa)=>{
            console.log(empresa);
            //repassando a rota e mandando a empresa localizada no state.
-           this.route.navigate(['/empresa'],{
+           this.route.navigate(['/principal/empresa'],{
                 state:{'dadosempresa':empresa}
            });
         },error:(erro)=>{

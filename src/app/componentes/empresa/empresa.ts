@@ -75,8 +75,7 @@ export class Empresa implements OnInit {
     
   }
 
-
-  
+ 
   cadastrar():void{
     //Retorna todos os dados do formulário
     const formEmpresa = this.formularioEmpresa.getRawValue();

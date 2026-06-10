@@ -1,0 +1,40 @@
+
+<div class="example-container">
+    <div class="back">    
+            <img src="logo.png">
+            <form [formGroup]="formLogin">
+                <div class="autenticacao">
+                    <mat-form-field class="campos">
+                    <mat-label>CPF</mat-label>
+                    <input type="text" matInput formControlName="login"/>          
+                    </mat-form-field>
+
+                    <mat-form-field class="campos">
+                        <mat-label>Informe sua senha</mat-label>
+                        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="senha" />
+                        <button
+                        matIconButton
+                        matSuffix
+                        (click)="clickEvent($event)"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide()"
+                        >
+                        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>         
+                    <section>            
+                        <div class="example-button-row">
+                        <a matButton="elevated" (click)="login()">Entrar</a>
+                        </div>
+                        <div><small>{{mensagem}}</small></div>
+                    </section>
+                </div>
+            </form>
+        </div>
+    <router-outlet></router-outlet>
+</div>
+    
+   
+
+  
+  
