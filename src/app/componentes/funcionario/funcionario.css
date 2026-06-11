@@ -1,0 +1,24 @@
+.formulario{
+   display: flex;
+   flex-direction: column;
+
+}
+.grande{
+    width: 50%;
+    margin-left: 5px;
+}
+.medio{
+    width: 30%;
+    margin-left: 5px;
+}
+.pequeno{
+    width: 20%;
+    margin-left: 5px;
+}
+.id{
+    display: none;
+}
+.titulo{
+    display: flex;
+    justify-content: center;
+}
