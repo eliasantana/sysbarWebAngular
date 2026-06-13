@@ -24,6 +24,90 @@
             <mat-form-field class="pequeno">
                 <mat-label>Senha</mat-label>
                 <input  matInput type="password" formControlName="senha"/>        
-            </mat-form-field>       
+            </mat-form-field>    
+            <mat-form-field class="pequeno">
+                <mat-label>Ativo?</mat-label>
+                <mat-select>
+                  <mat-option value="S">Sim</mat-option>
+                  <mat-option value="N">Não</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="pequeno2">
+                <mat-label>RG</mat-label>
+                <input  matInput type="text" formControlName="nrRg"/>        
+            </mat-form-field>   
+            <mat-form-field class="pequeno2">
+                <mat-label>CPF</mat-label>
+                <input  matInput type="text" formControlName="nrCpf"/>        
+            </mat-form-field>   
+            <mat-form-field class="pequeno2">
+                <mat-label>CNH</mat-label>
+                <input  matInput type="text" formControlName="nrCnh"/>        
+            </mat-form-field>
+            
+            <mat-form-field class="pequeno1">
+                <mat-label>CNHValidade</mat-label>    
+                <input  matInput [matDatepicker]="datepicker" formControlName="dtvalidadeCNH"/>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker>
+                  <mat-datepicker-actions>
+                    <button matButton matDatepickerCancel>Cancelar</button>
+                    <button matButton="elevated" matDatepickerApply>Selecionar</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>   
+            
+            <mat-form-field class="pequeno1">
+                <mat-label>Data de Desligamento</mat-label>
+                <input  matInput [matDatepicker]="dpDtDesligamento" formControlName="dtDesligamento" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="dpDtDesligamento"></mat-datepicker-toggle>
+                <mat-datepicker #dpDtDesligamento>
+                  <mat-datepicker-actions>
+                    <button matButton matDatepickerCancel>Cancelar</button>
+                    <button matButton="elevated" matDatepickerApply>Selecionar</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field> 
+
+            <mat-form-field class="pequeno1">
+                <mat-label>Data de Admissão</mat-label>
+                <input  matInput [matDatepicker]="dtAdmissao" formControlName="dtAdmissao" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="dtAdmissao"></mat-datepicker-toggle>
+                <mat-datepicker #dtAdmissao>
+                  <mat-datepicker-actions>
+                    <button matButton matDatepickerCancel>Cancelar</button>
+                    <button matButton="elevated" matDatepickerApply>Selecionar</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>   
+
+            <mat-form-field class="pequeno1">
+                <mat-label>Data de Nascimento</mat-label>
+                <input  matInput [matDatepicker]="dtNascimento" formControlName="dtNascimento" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="dtNascimento"></mat-datepicker-toggle>
+                <mat-datepicker #dtNascimento>
+                  <mat-datepicker-actions>
+                    <button matButton matDatepickerCancel>Cancelar</button>
+                    <button matButton="elevated" matDatepickerApply>Selecionar</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>   
+            <mat-form-field class="grande">
+                <mat-label>Observação</mat-label>
+                <textarea matInput placeholder="Digite uma Observação"></textarea>
+            </mat-form-field>
         </form>
+        <div class="botoes">
+            <section>                
+                <div class="example-button-row">
+                  <button matButton="elevated">Salvar</button>
+                  <button matButton="elevated">Pesquisar</button>
+                </div>                
+            </section>
+
+        </div>
 </div>

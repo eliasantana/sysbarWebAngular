@@ -15,10 +15,28 @@
     width: 20%;
     margin-left: 5px;
 }
+.pequeno1{
+    width: 15%;
+    margin-left: 5px;
+}
+.pequeno2{
+    width: 10%;
+    margin-left: 5px;
+}
 .id{
     display: none;
 }
 .titulo{
     display: flex;
     justify-content: center;
+}
+textarea{
+    height: 200px;
+}
+.botoes{
+    display: flex;
+    justify-content: center;
+}
+button{
+    margin-left: 10px;
 }

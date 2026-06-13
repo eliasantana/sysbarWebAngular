@@ -4,11 +4,29 @@ import { MatFormFieldControl, MatFormFieldModule } from "@angular/material/form-
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMaskDirective,provideNgxMask } from "ngx-mask";
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideNativeDateAdapter, MatOption, DateAdapter } from '@angular/material/core';
+import { MatSelectModule, MatSelect } from '@angular/material/select';
+import { MatDatepickerModule, MatDatepicker, MatDatepickerActions } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatButtonModule} from '@angular/material/button';
+
+
 
 @Component({
   selector: 'app-funcionario',
-  imports: [MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, NgxMaskDirective], 
+  imports: [MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    NgxMaskDirective,
+    MatOption,
+    MatSelect, 
+    MatSelectModule, 
+    MatDatepicker, 
+    MatDatepickerActions, 
+    MatNativeDateModule, 
+    MatDatepickerModule,
+    MatButtonModule, MatNativeDateModule], 
   providers:[provideNgxMask(), provideNativeDateAdapter()],
   templateUrl: './funcionario.html',
   styleUrl: './funcionario.css',
@@ -33,5 +51,11 @@ export class Funcionario {
       dtNascimento:new FormControl(''),
       dtInclusao:new FormControl('')
   });
+
+  constructor(private dateAdapter:DateAdapter<Date>){}
+
+  ngOnInit(){
+    this.dateAdapter.setLocale('pt-BR');
+  }
 
 }
