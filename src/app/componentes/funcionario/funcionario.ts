@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldControl, MatFormFieldModule } from "@angular/material/form-field";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,6 +9,10 @@ import { MatSelectModule, MatSelect } from '@angular/material/select';
 import { MatDatepickerModule, MatDatepicker, MatDatepickerActions } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { EmpresaServices } from 'src/app/services/empresa-services';
+import { Empresa } from '../../modelo/Empresa';
+import { FuncionarioServices } from 'src/app/services/funcionario-services';
 
 
 
@@ -26,14 +30,23 @@ import {MatButtonModule} from '@angular/material/button';
     MatDatepickerActions, 
     MatNativeDateModule, 
     MatDatepickerModule,
-    MatButtonModule, MatNativeDateModule], 
+    MatButtonModule, MatNativeDateModule, MatTableModule], 
   providers:[provideNgxMask(), provideNativeDateAdapter()],
   templateUrl: './funcionario.html',
   styleUrl: './funcionario.css',
 })
-export class Funcionario {
+export class Funcionario implements OnInit {
 
-   formularioFuncionario = new FormGroup({
+  colunas:string[]=['cdFuncionario',
+                      'nome',                      
+                      'telefone',
+                      'snAtivo',
+  ];
+  funcionarios = new MatTableDataSource<any>();
+  
+  empresas:Empresa[]=[];
+
+  formularioFuncionario = new FormGroup({
       cdFuncionario:new FormControl(''),
       nome:new FormControl(''),
       caminhoImagem:new FormControl(''),
@@ -52,10 +65,36 @@ export class Funcionario {
       dtInclusao:new FormControl('')
   });
 
-  constructor(private dateAdapter:DateAdapter<Date>){}
+  constructor(private dateAdapter:DateAdapter<Date>, private empresaService:EmpresaServices, private service:FuncionarioServices){}
 
   ngOnInit(){
     this.dateAdapter.setLocale('pt-BR');
+    this.listarEmpresas();
   }
-
+  
+  //Retorna a lista de empresas no carregamento que prenchegar o componente filtro
+  listarEmpresas():void{
+    this.empresaService.listar().subscribe({
+        next:(dados)=>{
+            this.empresas.push(...dados);                    
+        },
+        error:(erro)=>{
+          console.log('Erro ao tentar carrgerar a lista de empresas');
+        }
+    });
+  }
+  
+  pesquisarFuncionarioEmpresa(cdEmpresa: number):void{
+      this.service.pesquisafuncionarioPorEmpresa(cdEmpresa).subscribe({
+          next:(funcionariosEmpresa)=>{
+            //this.funcionarios.data=[...funcionariosEmpresa];
+            this.funcionarios.data=funcionariosEmpresa;
+            console.log('Opção selecionada!' + cdEmpresa);
+          },
+          error:(erro)=>{
+              console.log('Erro ao solicitar lista de funcionário');
+          }
+      });
+  }
+  
 }

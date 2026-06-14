@@ -108,6 +108,43 @@
                   <button matButton="elevated">Pesquisar</button>
                 </div>                
             </section>
-
         </div>
+        <div class="filtro">
+          <mat-form-field class="medio">
+            <mat-label>Filtrar Empresa</mat-label>
+            <mat-select (selectionChange)="pesquisarFuncionarioEmpresa($event.value)">
+             @if(empresas.length > 0){
+               @for (empresa of empresas; track empresa.cdEmpresa) {
+                 <mat-option [value]="empresa.cdEmpresa">{{empresa.cdEmpresa}} - {{empresa.nomeEmpresa}}</mat-option>                
+               }
+             }
+            </mat-select>
+            <mat-hint align="end">Clique aqui ^</mat-hint>
+          </mat-form-field>
+        </div>
+        <table mat-table [dataSource]="funcionarios" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="cdFuncionario">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let funcionario"> {{funcionario.cdFuncionario}}</td>
+          </ng-container>
+        
+          <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <td mat-cell *matCellDef="let funcionario"> {{funcionario.nome}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="telefone">
+            <th mat-header-cell *matHeaderCellDef> Telefone </th>
+            <td mat-cell *matCellDef="let funcionario"> {{funcionario.weight}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="snAtivo">
+            <th mat-header-cell *matHeaderCellDef> Ativo? </th>
+            <td mat-cell *matCellDef="let funcionario"> {{funcionario.snAtivo}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+          <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+        </table>
 </div>
