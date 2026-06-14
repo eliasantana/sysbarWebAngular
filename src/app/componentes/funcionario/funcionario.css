@@ -44,4 +44,5 @@ button{
     display: flex;
     justify-content: right;
     margin-right: 20px;
+    margin: 10px 10px;
 }
