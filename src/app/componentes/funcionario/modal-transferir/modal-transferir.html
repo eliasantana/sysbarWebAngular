@@ -1,0 +1,54 @@
+<div class="titulo">
+    <h2>Transferencia de Funcionário</h2>
+</div>
+<div class="container">
+    <form class="formulario">
+        <table>            
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Empresa Atual</mat-label>
+                        <input matInput readonly="true" value="{{data.cdEmpresaLogada}}">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Código do Funcionario</mat-label>
+                        <input matInput readonly="true" value="{{data.cdFuncionario}}">
+                    </mat-form-field>
+                </td>        
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field class="grande">
+                        <mat-label>Funcionario:</mat-label>
+                        <input matInput readonly="true" value="{{data.nome}}">
+                    </mat-form-field> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field class="grande">
+                        <mat-label>Selecione a empresa de Destino</mat-label>
+                        <mat-select (selectionChange)="selecionarEmpresa($event.value, data.cdEmpresaLogada, data.cdFuncionario)">
+                            @for (empresa of empresas; track empresa.cdEmpresa) {
+                                <mat-option [value]='empresa.cdEmpresa'>
+                                    {{empresa.cdEmpresa}} - {{empresa.nomeEmpresa}}
+                                </mat-option>
+                            }
+                        </mat-select>
+                        <mat-hint align="end">Clique aqui ^</mat-hint>
+                      </mat-form-field>                    
+                </td>    
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="botoes">
+                        <button matButton="elevated" (click)="onCancelar()">Cancelar</button>                        
+                        <button matButton="elevated" (click)="onConfirmar()">Confirmar</button>                        
+                    </div>   
+                </td>
+            </tr>
+        </table> 
+    </form>
+</div>

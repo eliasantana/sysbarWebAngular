@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 import { Service } from 'src/app/services/service';
 import { Cargo } from 'src/app/modelo/Cargo';
+import { ModalTransferir } from './modal-transferir/modal-transferir';
 
 
 
@@ -154,6 +155,27 @@ export class Funcionario implements OnInit {
         }
       });
   }
+  //Janela Modal Transferir Funcionário
+  tranferir(cdFuncionario:number, nome:string):void{
+    this.funcionarioSelecionado=cdFuncionario;
+    
+    const dialogRef=this.dialog.open(ModalTransferir,{
+        width:'600px',
+        height:'400px',
+        data:{
+           cdFuncionario:cdFuncionario,
+           cdEmpresaLogada:this.empresaSelecionada,
+           nome:nome
+        }
+    });
+    
+    dialogRef.afterClosed().subscribe((confirmado:boolean)=>{
+      if (confirmado){
+        console.log('Fechar');
+      }
+    })
+  }
+
   //Janela de confirmação
   confirma(funcionario:any, titulo:string, mensagem:string, operacao:string):void{
       
@@ -197,12 +219,10 @@ export class Funcionario implements OnInit {
       console.log(' cargo selecionardo -> ' + this.cargoSelecionado);
       console.log(' Empresa selecionarda -> ' + this.empresaSelecionada);
   }
-
+  
+  //Salva o funcionario
   salvar():void {
-    const dadosFormulario = this.formularioFuncionario.getRawValue();
-    console.log('Empresa Selecionada: ' + this.empresaSelecionada);
-    console.log('Cargo Selecionado: ' + this.cargoSelecionado);
-    console.log('DADOS FORMULÁRIO ' + dadosFormulario);
+    const dadosFormulario = this.formularioFuncionario.getRawValue();   
     this.service.adicionar(dadosFormulario, this.empresaSelecionada, this.cargoSelecionado).subscribe({
       next:(dados)=>{
           console.log('Dados enviados com sucesso!');
@@ -215,5 +235,7 @@ export class Funcionario implements OnInit {
           }
       });   
   }
+
+
   
 }

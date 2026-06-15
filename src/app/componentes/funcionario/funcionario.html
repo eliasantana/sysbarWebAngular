@@ -187,6 +187,9 @@
                   <button matButton="elevated" (click)="confirma(funcionario,'Confirma a Edição?','Deseja realmente Editar o funcionário(a) '+funcionario.nome,'E')">
                     <mat-icon>edit</mat-icon>Editar
                   </button>               
+                  <button matButton="elevated" (click)="tranferir(funcionario.cdFuncionario, funcionario.nome)">
+                    <mat-icon>swap_horiz</mat-icon>Transferir
+                  </button>               
                 </td>              
               </ng-container>
             
