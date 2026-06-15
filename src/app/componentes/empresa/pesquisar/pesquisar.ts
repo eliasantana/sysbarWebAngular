@@ -23,7 +23,12 @@ import { ResourceLoader } from '@angular/compiler';
   selector: 'app-pesquisar',
   imports: [MatTableModule,
     MatIconModule,
-    MatButtonModule,MatDialogModule, MatInputModule, MatFormFieldModule, FormsModule,MatSlideToggleModule
+    MatButtonModule,
+    MatDialogModule, 
+    MatInputModule, 
+    MatFormFieldModule, 
+    FormsModule,
+    MatSlideToggleModule
      ],
   templateUrl: './pesquisar.html',
   styleUrl: './pesquisar.css',

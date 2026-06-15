@@ -11,9 +11,21 @@ export class FuncionarioServices {
 
   constructor(private http:HttpClient){}
   urlFuncionarioEmpresa='http://localhost:8081/funcionario/listar/';
-
+  urlExcluir='http://localhost:8081/funcionario/excluir/'; 
+  urlLocalizarFuncionario='http://localhost:8081/funcionario/get/'; 
+  
   pesquisafuncionarioPorEmpresa(cdEmpresa:number):Observable<any>{
       return this.http.get<Funcionario>(this.urlFuncionarioEmpresa+cdEmpresa);
   }
+
+  excluir(idEmpresaLogada:number, cdFuncionario:number):Observable<any>{      
+     return this.http.delete<Funcionario>(this.urlExcluir+idEmpresaLogada + '/' + cdFuncionario);
+  }
+
+  localizarFuncionario(cdFuncionario:number):Observable<any>{
+      return this.http.get<Funcionario>(this.urlLocalizarFuncionario+cdFuncionario);
+  }
+
+
 
 }

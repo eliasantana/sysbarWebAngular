@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldControl, MatFormFieldModule } from "@angular/material/form-field";
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,9 @@ import { EmpresaServices } from 'src/app/services/empresa-services';
 import { Empresa } from '../../modelo/Empresa';
 import { FuncionarioServices } from 'src/app/services/funcionario-services';
 import { MatIcon, MatIconModule } from "@angular/material/icon";
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 
 
 
@@ -31,7 +34,11 @@ import { MatIcon, MatIconModule } from "@angular/material/icon";
     MatDatepickerActions,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatButtonModule, MatNativeDateModule, MatTableModule, MatIconModule], 
+    MatButtonModule, 
+    MatNativeDateModule, 
+    MatTableModule, 
+    MatIconModule, 
+    MatSlideToggleModule], 
   providers:[provideNgxMask(), provideNativeDateAdapter()],
   templateUrl: './funcionario.html',
   styleUrl: './funcionario.css',
@@ -42,6 +49,7 @@ export class Funcionario implements OnInit {
                       'nome',                      
                       'telefone',
                       'snAtivo',
+                      'acao'
   ];
   funcionarios = new MatTableDataSource<any>();
   
@@ -74,6 +82,13 @@ export class Funcionario implements OnInit {
   //Controla a exibição da grid
   btnExibirPesquisa:boolean=false;
   btnExibirFomulario:boolean=true;
+
+  //Armazena a empresa selecionada
+  empresaSelecionada:number=0;
+
+  //injeta a janela de confirmação
+  private dialog = inject(MatDialog);
+  private funcionarioSelecionado:number=0;
   
   ngOnInit(){
     this.dateAdapter.setLocale('pt-BR');
@@ -99,6 +114,7 @@ export class Funcionario implements OnInit {
             this.funcionarios.data=funcionariosEmpresa;
             console.log('Opção selecionada!' + cdEmpresa);
             this.campofiltro.nativeElement.focus();
+            this.empresaSelecionada=cdEmpresa;
           },
           error:(erro)=>{
               console.log('Erro ao solicitar lista de funcionário');
@@ -120,4 +136,43 @@ export class Funcionario implements OnInit {
       const filtroValue = (evento.target as HTMLInputElement).value;
       this.funcionarios.filter = filtroValue.trim().toLowerCase();
   }
+
+  excluirFuncionario(cdFuncionario:number){
+      console.log('empresa selecionada: ' + this.empresaSelecionada);
+      console.log('cdFuncionario: ' + cdFuncionario);
+      this.service.excluir(this.empresaSelecionada, cdFuncionario).subscribe({
+        next:(dados)=>{
+            console.log('Excluíndo ->'+dados);
+        },
+        error(erro){
+          console.log('Erro ao tentar Excluir o funcionário! ');
+        }
+      });
+  }
+  //Janela de confirmação
+  confirma(funcionario:any, titulo:string, mensagem:string):void{
+      
+      const dialogRef = this.dialog.open(ConfirmeDialog,{
+        width:'400px',
+        data:{
+          titulo:titulo,
+          mensagem:mensagem
+        }        
+      });
+    
+    dialogRef.afterClosed().subscribe((confirmado:boolean)=>{
+        if (confirmado){
+            this.service.localizarFuncionario(funcionario.cdFuncionario).subscribe({
+              next:(dados)=>{
+                  console.log('Funcionário localizado!');
+              },
+              error(erro){
+                  console.log('Erro ao tentar localizar o funcionário,',erro);
+              }
+            });
+        }
+   });
+  }
+
+  
 }
