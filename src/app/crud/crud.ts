@@ -86,8 +86,7 @@ cadastrar():void{
 const dadosFormulario = this.formularioCargo.getRawValue();
 if(this.formularioCargo.invalid){      
     alert('Dados Inválido! Por favor revise os dados informados!');
-}else{
-    console.log('Dados enviados ao servidor ', dadosFormulario);
+}else{    
       this.servico.enviar(dadosFormulario).subscribe({
           next:(dadosSalvo) => {
               alert('Cargo cadastrado com sucesso!');

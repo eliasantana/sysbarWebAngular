@@ -17,6 +17,8 @@ import { MatIcon, MatIconModule } from "@angular/material/icon";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
+import { Service } from 'src/app/services/service';
+import { Cargo } from 'src/app/modelo/Cargo';
 
 
 
@@ -54,6 +56,7 @@ export class Funcionario implements OnInit {
   funcionarios = new MatTableDataSource<any>();
   
   empresas:Empresa[]=[];
+  cargos:Cargo[]=[];
 
   formularioFuncionario = new FormGroup({
       cdFuncionario:new FormControl(''),
@@ -77,7 +80,10 @@ export class Funcionario implements OnInit {
   @ViewChild('campofiltro')
   campofiltro!:ElementRef<HTMLInputElement>;
 
-  constructor(private dateAdapter:DateAdapter<Date>, private empresaService:EmpresaServices, private service:FuncionarioServices){}
+  constructor(private dateAdapter:DateAdapter<Date>, 
+              private empresaService:EmpresaServices, 
+              private service:FuncionarioServices, 
+              private cargoService:Service){}
   
   //Controla a exibição da grid
   btnExibirPesquisa:boolean=false;
@@ -85,6 +91,7 @@ export class Funcionario implements OnInit {
 
   //Armazena a empresa selecionada
   empresaSelecionada:number=0;
+  cargoSelecionado:number=0;
 
   //injeta a janela de confirmação
   private dialog = inject(MatDialog);
@@ -93,6 +100,7 @@ export class Funcionario implements OnInit {
   ngOnInit(){
     this.dateAdapter.setLocale('pt-BR');
     this.listarEmpresas();
+    this.litartCargos();
   }
   
   //Retorna a lista de empresas no carregamento que prenchegar o componente filtro
@@ -109,11 +117,10 @@ export class Funcionario implements OnInit {
   
   pesquisarFuncionarioEmpresa(cdEmpresa: number):void{
       this.service.pesquisafuncionarioPorEmpresa(cdEmpresa).subscribe({
-          next:(funcionariosEmpresa)=>{
-            //this.funcionarios.data=[...funcionariosEmpresa];
+          next:(funcionariosEmpresa)=>{            
             this.funcionarios.data=funcionariosEmpresa;
             console.log('Opção selecionada!' + cdEmpresa);
-            this.campofiltro.nativeElement.focus();
+            //this.campofiltro.nativeElement.focus();
             this.empresaSelecionada=cdEmpresa;
           },
           error:(erro)=>{
@@ -121,7 +128,7 @@ export class Funcionario implements OnInit {
           }
       });
   }
-  
+    
   exibePesquisa(){
     this.btnExibirPesquisa=true;
     this.btnExibirFomulario=false;    
@@ -137,9 +144,7 @@ export class Funcionario implements OnInit {
       this.funcionarios.filter = filtroValue.trim().toLowerCase();
   }
 
-  excluirFuncionario(cdFuncionario:number){
-      console.log('empresa selecionada: ' + this.empresaSelecionada);
-      console.log('cdFuncionario: ' + cdFuncionario);
+  excluirFuncionario(cdFuncionario:number){      
       this.service.excluir(this.empresaSelecionada, cdFuncionario).subscribe({
         next:(dados)=>{
             console.log('Excluíndo ->'+dados);
@@ -150,7 +155,7 @@ export class Funcionario implements OnInit {
       });
   }
   //Janela de confirmação
-  confirma(funcionario:any, titulo:string, mensagem:string):void{
+  confirma(funcionario:any, titulo:string, mensagem:string, operacao:string):void{
       
       const dialogRef = this.dialog.open(ConfirmeDialog,{
         width:'400px',
@@ -161,10 +166,10 @@ export class Funcionario implements OnInit {
       });
     
     dialogRef.afterClosed().subscribe((confirmado:boolean)=>{
-        if (confirmado){
+        if (confirmado && operacao=='E'){
             this.service.localizarFuncionario(funcionario.cdFuncionario).subscribe({
-              next:(dados)=>{
-                  console.log('Funcionário localizado!');
+              next:(dados)=>{                
+                this.formularioFuncionario.patchValue(dados);                
               },
               error(erro){
                   console.log('Erro ao tentar localizar o funcionário,',erro);
@@ -172,7 +177,43 @@ export class Funcionario implements OnInit {
             });
         }
    });
+   this.exibeCadastro();
   }
 
+  litartCargos():void{
+      this.cargoService.listar().subscribe({
+        next:(dados)=>{
+          this.cargos=dados;
+          console.log(dados);
+        },
+        error:(erro)=>{
+          console.log('Erro ao listar cargos! ', erro);
+        }
+      });
+  }
+
+  selecionarCargo(cdEmpresa:number):void{
+      this.cargoSelecionado=cdEmpresa;
+      console.log(' cargo selecionardo -> ' + this.cargoSelecionado);
+      console.log(' Empresa selecionarda -> ' + this.empresaSelecionada);
+  }
+
+  salvar():void {
+    const dadosFormulario = this.formularioFuncionario.getRawValue();
+    console.log('Empresa Selecionada: ' + this.empresaSelecionada);
+    console.log('Cargo Selecionado: ' + this.cargoSelecionado);
+    console.log('DADOS FORMULÁRIO ' + dadosFormulario);
+    this.service.adicionar(dadosFormulario, this.empresaSelecionada, this.cargoSelecionado).subscribe({
+      next:(dados)=>{
+          console.log('Dados enviados com sucesso!');
+          this.formularioFuncionario.reset();
+          this.empresaSelecionada=0;
+          this.cargoSelecionado=0;
+      },
+      error:(erro)=>{
+            console.log('Erro ao tentar salvar o funcionário!',erro);
+          }
+      });   
+  }
   
 }

@@ -97,7 +97,28 @@
                     <button matButton="elevated" matDatepickerApply>Selecionar</button>
                   </mat-datepicker-actions>
                 </mat-datepicker>
-            </mat-form-field>   
+            </mat-form-field>
+            <mat-form-field class="pequeno">
+              <mat-label>Cargos</mat-label>
+              <mat-select (selectionChange)="selecionarCargo($event.value)">                
+               @for (cargo of cargos; track cargo.cdcargo) {
+                 <mat-option [value]="cargo.cdcargo">{{cargo.dscargo}}</mat-option>
+               }               
+              </mat-select>
+            </mat-form-field>  
+            <!-- --> 
+            <mat-form-field class="medio">
+              <mat-label>Filtrar Empresa</mat-label>
+              <mat-select (selectionChange)="pesquisarFuncionarioEmpresa($event.value)">
+               @if(empresas.length > 0){
+                 @for (empresa of empresas; track empresa.cdEmpresa) {
+                   <mat-option [value]="empresa.cdEmpresa">{{empresa.cdEmpresa}} - {{empresa.nomeEmpresa}}</mat-option>                
+                 }
+               }
+              </mat-select>
+              <mat-hint align="end">Clique aqui ^</mat-hint>
+            </mat-form-field>
+            <!-- -->
             <mat-form-field class="grande">
                 <mat-label>Observação</mat-label>
                 <textarea matInput placeholder="Digite uma Observação"></textarea>
@@ -108,7 +129,7 @@
             <section>                
                 <div class="example-button-row">
                   @if (btnExibirFomulario) {
-                    <button matButton="elevated">Salvar</button>
+                    <button matButton="elevated" (click)="salvar()">Salvar</button>
                     <button matButton="elevated" (click)="exibePesquisa()">Pesquisar</button>
                   }@else{
                     <button matButton="elevated" (click)="exibeCadastro()">Cadastro</button>
@@ -136,41 +157,42 @@
               <mat-hint align="end">Clique aqui ^</mat-hint>
             </mat-form-field>
           </div>
-          <table mat-table [dataSource]="funcionarios" class="mat-elevation-z8">
-  
-            <ng-container matColumnDef="cdFuncionario">
-              <th mat-header-cell *matHeaderCellDef> No. </th>
-              <td mat-cell *matCellDef="let funcionario"> {{funcionario.cdFuncionario}}</td>
-            </ng-container>
-          
-            <ng-container matColumnDef="nome">
-              <th mat-header-cell *matHeaderCellDef> Nome </th>
-              <td mat-cell *matCellDef="let funcionario"> {{funcionario.nome}} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="telefone">
-              <th mat-header-cell *matHeaderCellDef> Telefone </th>
-              <td mat-cell *matCellDef="let funcionario"> {{funcionario.weight}} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="snAtivo">
-              <th mat-header-cell *matHeaderCellDef> Ativo? </th>
-              <td mat-cell *matCellDef="let funcionario">
-                <mat-slide-toggle [checked]="funcionario.snAtivo=='S' ? true : false" (change)="excluirFuncionario(funcionario.cdFuncionario)"></mat-slide-toggle>
-              </td>              
-            </ng-container>
+          <div class="tabela">          
+            <table mat-table [dataSource]="funcionarios" class="mat-elevation-z8">    
+              <ng-container matColumnDef="cdFuncionario">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let funcionario"> {{funcionario.cdFuncionario}}</td>
+              </ng-container>
+            
+              <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef> Nome </th>
+                <td mat-cell *matCellDef="let funcionario"> {{funcionario.nome}} </td>
+              </ng-container>
+            
+              <ng-container matColumnDef="telefone">
+                <th mat-header-cell *matHeaderCellDef> Telefone </th>
+                <td mat-cell *matCellDef="let funcionario"> {{funcionario.telefone}}</td>
+              </ng-container>
+            
+              <ng-container matColumnDef="snAtivo">
+                <th mat-header-cell *matHeaderCellDef> Ativar/Desativar? </th>
+                <td mat-cell *matCellDef="let funcionario">
+                  <mat-slide-toggle [checked]="funcionario.snAtivo=='S' ? true : false" (change)="excluirFuncionario(funcionario.cdFuncionario)"></mat-slide-toggle>
+                </td>              
+              </ng-container>
 
-            <ng-container matColumnDef="acao">
-              <th mat-header-cell *matHeaderCellDef> Ação</th>
-              <td mat-cell *matCellDef="let funcionario">
-                <button matMiniFab (click)="confirma(funcionario,'Confirma a Edição?','Deseja realmente Editar o funcionário(a) '+funcionario.nome)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </td>              
-            </ng-container>
-          
-            <tr mat-header-row *matHeaderRowDef="colunas"></tr>
-            <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
-          </table>
+              <ng-container matColumnDef="acao">
+                <th mat-header-cell *matHeaderCellDef> Ação</th>
+                <td mat-cell *matCellDef="let funcionario">
+                  <button matButton="elevated" (click)="confirma(funcionario,'Confirma a Edição?','Deseja realmente Editar o funcionário(a) '+funcionario.nome,'E')">
+                    <mat-icon>edit</mat-icon>Editar
+                  </button>               
+                </td>              
+              </ng-container>
+            
+              <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+              <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+            </table>
+        </div>
         }  
 </div>

@@ -42,8 +42,7 @@ export class LoginServices {
   }
 
   recuperaDaSessao():UsuarioLogado | null{
-    this.usuarioLogado = this.usuarioLogado =  sessionStorage.getItem('usuarioLogado') ||'';
-    console.log('sessão: ' + sessionStorage.getItem('usuarioLogado'));
+    this.usuarioLogado = this.usuarioLogado =  sessionStorage.getItem('usuarioLogado') ||'';    
     return this.usuarioLogado ? JSON.parse(this.usuarioLogado) as UsuarioLogado:null;
   }
 

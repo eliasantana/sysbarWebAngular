@@ -1,9 +1,9 @@
 export class Cargo{
-    cdCargo?:number;
-    dsCargo?:string;
-    vlSalarioBruto?:number;
-    vlSalarioLiquido?:number;
-    vlInss?:number;
-    vlFgts?:number;
-    snAtivo?:string;
+    cdcargo?:number;
+    dscargo?:string;
+    vlbruto?:number;
+    vlliquido?:number;
+    vlinss?:number;
+    vlfgts?:number;
+    snativo?:string;    
 }
