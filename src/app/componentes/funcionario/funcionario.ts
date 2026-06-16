@@ -108,7 +108,8 @@ export class Funcionario implements OnInit {
   listarEmpresas():void{
     this.empresaService.listar().subscribe({
         next:(dados)=>{
-            this.empresas.push(...dados);                    
+            //this.empresas.push(...dados);                    
+            this.empresas=[...dados];
         },
         error:(erro)=>{
           console.log('Erro ao tentar carrgerar a lista de empresas');
@@ -119,10 +120,11 @@ export class Funcionario implements OnInit {
   pesquisarFuncionarioEmpresa(cdEmpresa: number):void{
       this.service.pesquisafuncionarioPorEmpresa(cdEmpresa).subscribe({
           next:(funcionariosEmpresa)=>{            
-            this.funcionarios.data=funcionariosEmpresa;
-            console.log('Opção selecionada!' + cdEmpresa);
-            //this.campofiltro.nativeElement.focus();
-            this.empresaSelecionada=cdEmpresa;
+           //teste
+           // this.funcionarios.data=funcionariosEmpresa;
+           this.funcionarios.data=[...funcionariosEmpresa];            
+           //this.campofiltro.nativeElement.focus();
+           this.empresaSelecionada=cdEmpresa;           
           },
           error:(erro)=>{
               console.log('Erro ao solicitar lista de funcionário');
@@ -171,7 +173,7 @@ export class Funcionario implements OnInit {
     
     dialogRef.afterClosed().subscribe((confirmado:boolean)=>{
       if (confirmado){
-        console.log('Fechar');
+        this.pesquisarFuncionarioEmpresa(this.empresaSelecionada);
       }
     })
   }

@@ -50,7 +50,8 @@ export class ModalTransferir{
   cdEmpresaAtual:number=0;
   cdFuncionario:number=0;
 
-  constructor(private empresaServices:EmpresaServices){}
+  constructor(private empresaServices:EmpresaServices, 
+              private funcionarioService:FuncionarioServices){}
   
   
   ngOnInit(){
@@ -61,7 +62,8 @@ export class ModalTransferir{
   }
 
   onConfirmar():void{
-    this.dialogRef.close(true);
+    this.tranferir();    
+    this.dialogRef.close(true);    
   }
 
   listarEmpresas():void{
@@ -76,9 +78,25 @@ export class ModalTransferir{
   }
 
   selecionarEmpresa(cdEmpresa:number, cdEmpresaAtual:number, cdFuncionario:number){      
-      console.log('EMPRESA DE DESTINO -> '+ cdEmpresa);
-      console.log('EMPRESA ATUAL  -> ' + cdEmpresaAtual);
-      console.log('FUNCIONARIO  -> ' +  cdFuncionario);
+    
+      this.cdEmpDestino = cdEmpresa;
+      this.cdEmpresaAtual = cdEmpresaAtual;
+      this.cdFuncionario = cdFuncionario;    
+  }
+
+  tranferir(){
+      this.funcionarioService.transferir(null, 
+                                        this.cdEmpresaAtual, 
+                                        this.cdFuncionario, 
+                                        this.cdEmpDestino)
+      .subscribe({
+         next:()=>{
+             console.log('Dados enviados com sucesso!');             
+         },
+         error:(erro)=>{
+             console.log('Erro ao tentar transferir o funcionário! :',erro);
+         }
+      }); 
   }
 
 }

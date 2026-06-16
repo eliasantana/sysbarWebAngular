@@ -12,7 +12,7 @@ export class EmpresaServices {
   private urlListar='http://localhost:8081/empresa/listar';
   private urlExcluir='http://localhost:8081/empresa/delete/';
   private urlLocalizar='http://localhost:8081/empresa/';
-
+  
   constructor(private http:HttpClient){}
 
   adicionar(obj:any):Observable<any>{
@@ -29,7 +29,9 @@ export class EmpresaServices {
 
   localizar(id:number):Observable<any>{
     return this.http.get<Empresa>(this.urlLocalizar+id);
-    }
+  }
+
+ 
 
   
 }
