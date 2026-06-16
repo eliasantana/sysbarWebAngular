@@ -1,3 +1,52 @@
+# SysbarWebAngular
+
+## 📖 Sobre o Projeto
+
+O **SysbarWebAngular** é um projeto desenvolvido com o objetivo de consolidar e aplicar os conhecimentos adquiridos no framework **Angular 21**.
+
+A proposta deste projeto é servir como ambiente prático para estudo e desenvolvimento, explorando recursos modernos do Angular, boas práticas de arquitetura, componentes reutilizáveis, integração com APIs REST e demais funcionalidades oferecidas pela plataforma.
+
+Este projeto utiliza uma API desenvolvida em Java/SpringBoot 
+
+## 🎯 Objetivos
+
+- Consolidar o aprendizado do Angular 21.
+- Aplicar conceitos de desenvolvimento frontend moderno.
+- Praticar a criação de componentes reutilizáveis.
+- Implementar integração com APIs REST.
+- Utilizar recursos atuais do framework, como:
+  - Standalone Components
+  - Signals
+  - Control Flow (`@if`, `@for`, `@switch`)
+  - Injeção de Dependência
+  - Angular Material
+  - Roteamento
+  - Formulários Reativos
+
+## 🛠️ Tecnologias Utilizadas
+
+- Angular 21
+- TypeScript
+- HTML5
+- CSS3
+- Angular Material
+- RxJS
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+
+- Node.js
+- npm
+- Angular CLI
+
+### Instalação
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/seu-usuario/SysbarWebAngular.git
+
 # Front
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
