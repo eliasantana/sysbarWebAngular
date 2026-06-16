@@ -15,6 +15,8 @@ export class FuncionarioServices {
   urlLocalizarFuncionario='http://localhost:8081/funcionario/get/'; 
   urlAdicionarFuncionario='http://localhost:8081/funcionario/adicionar/'; 
   private urlTransferir='http://localhost:8081/funcionario/transferir/';
+  private urlPromover='http://localhost:8081/funcionario/promover/';
+  //{idemplogada}/{idfuncionario}/{idnovocargo}
   
   pesquisafuncionarioPorEmpresa(cdEmpresa:number):Observable<any>{
       return this.http.get<Funcionario>(this.urlFuncionarioEmpresa+cdEmpresa);
@@ -34,5 +36,9 @@ export class FuncionarioServices {
 
   transferir(obj:any, idemplogada:number, idfuncionario:number, idempdestino:number):Observable<any>{
     return this.http.post<any>(this.urlTransferir+idemplogada+'/'+idfuncionario+'/'+idempdestino,obj);
+  }
+  promover(obj:any, cdEmpresaLogada:number, cdFuncionario:number, cdNovoCargo:number):Observable<any>{
+      console.log('END POINT -> ' + this.urlPromover+cdEmpresaLogada+'/'+cdFuncionario+'/'+cdNovoCargo);
+      return this.http.post<any>(this.urlPromover+cdEmpresaLogada+'/'+cdFuncionario+'/'+cdNovoCargo,obj);
   }
 }

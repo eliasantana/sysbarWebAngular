@@ -1,0 +1,29 @@
+.titulo{
+    display: flex;
+    height: 50px;
+    background-color: rgb(83, 83, 134);
+    color: white;
+    justify-content: center;
+}
+.container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+table{
+    width: 80%;
+}
+.formulario {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+.grande{
+    width: 100%;
+}
+.botoes{
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+    gap: 10px;
+}

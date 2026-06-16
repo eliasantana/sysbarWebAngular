@@ -11,9 +11,6 @@ import { Empresa } from 'src/app/modelo/Empresa';
 import { EmpresaServices } from 'src/app/services/empresa-services';
 import { Funcionario } from '../funcionario';
 
-
-
-
 //Interface responsável por receber os dados do formulário
 export interface ModalTransferirData{
   cdEmpresaLogada:number;

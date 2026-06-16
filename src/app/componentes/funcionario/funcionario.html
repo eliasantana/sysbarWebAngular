@@ -102,7 +102,7 @@
               <mat-label>Cargos</mat-label>
               <mat-select (selectionChange)="selecionarCargo($event.value)">                
                @for (cargo of cargos; track cargo.cdcargo) {
-                 <mat-option [value]="cargo.cdcargo">{{cargo.dscargo}}</mat-option>
+                 <mat-option [value]="cargo.cdcargo">{{cargo.cdcargo}} - {{cargo.dscargo}}</mat-option>
                }               
               </mat-select>
             </mat-form-field>  
@@ -189,6 +189,9 @@
                   </button>               
                   <button matButton="elevated" (click)="tranferir(funcionario.cdFuncionario, funcionario.nome)">
                     <mat-icon>swap_horiz</mat-icon>Transferir
+                  </button>               
+                  <button matButton="elevated" (click)="promover(funcionario.cdFuncionario, funcionario.nome)">
+                    <mat-icon>arrow_upward</mat-icon>Promover
                   </button>               
                 </td>              
               </ng-container>

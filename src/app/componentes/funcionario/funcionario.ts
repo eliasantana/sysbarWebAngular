@@ -20,6 +20,7 @@ import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 import { Service } from 'src/app/services/service';
 import { Cargo } from 'src/app/modelo/Cargo';
 import { ModalTransferir } from './modal-transferir/modal-transferir';
+import { ModalPromover } from './modal-promover/modal-promover';
 
 
 
@@ -92,7 +93,7 @@ export class Funcionario implements OnInit {
 
   //Armazena a empresa selecionada
   empresaSelecionada:number=0;
-  cargoSelecionado:number=0;
+  public cargoSelecionado:number=0;
 
   //injeta a janela de confirmação
   private dialog = inject(MatDialog);
@@ -178,6 +179,40 @@ export class Funcionario implements OnInit {
     })
   }
 
+  //Janela modal promover
+  promover(cdFuncionario:number, nome:string):void{
+    console.log('FUNCIONARIO LOGADO-> ' + cdFuncionario);
+    console.log('EMPRESAL LOGADA-> ' + this.empresaSelecionada);
+    console.log('FUNCIONÁRIO NOME-> ' + nome);
+
+    const dialogRef = this.dialog.open(ModalPromover, {
+      width:'600px',
+      height:'400px',
+      data:{
+         cdFuncionario:cdFuncionario,
+         cdEmpresaLogada:this.empresaSelecionada,
+         nome:nome         
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado:number)=>{
+      if (confirmado!=0){
+         console.log('Dados enviados pela confirmação! ' + confirmado);
+         this.service.promover(null, 
+                               this.empresaSelecionada, 
+                               cdFuncionario, 
+                               confirmado).subscribe({                                  
+                                next:()=>{
+                                    console.log('Dados enviados com sucesso!');
+                                  },
+                                  error:(erro)=>{
+                                    console.log('Erro ao tentar promover o funcioário!');
+                                  }
+                               });
+      }
+    });
+  }
+
   //Janela de confirmação
   confirma(funcionario:any, titulo:string, mensagem:string, operacao:string):void{
       
@@ -216,8 +251,8 @@ export class Funcionario implements OnInit {
       });
   }
 
-  selecionarCargo(cdEmpresa:number):void{
-      this.cargoSelecionado=cdEmpresa;
+  selecionarCargo(cdCargo:number):void{
+      this.cargoSelecionado=cdCargo;
       console.log(' cargo selecionardo -> ' + this.cargoSelecionado);
       console.log(' Empresa selecionarda -> ' + this.empresaSelecionada);
   }
