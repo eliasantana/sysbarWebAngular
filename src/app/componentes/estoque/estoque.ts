@@ -146,7 +146,7 @@ export class Estoque {
     this.services.excluir(this.empresaLogada, cdEstoque).subscribe({
         next:(dados)=>{
             console.log('Estoque Excluído com sucesso!');
-            this.listarEstoque(cdEstoque);
+            this.listarEstoque(this.empresaLogada);
         },
         error:(erro)=>{
           console.log('Erro ao tentar excluir o estoque selecionado!', erro);
@@ -154,6 +154,9 @@ export class Estoque {
     });
   }
 
- 
+ filtro(event:Event){
+    const filtroValue = (event.target as HTMLInputElement).value;
+    this.estoques.filter=(filtroValue.trim().toLowerCase());
+ }
 
 }
