@@ -5,6 +5,7 @@ import { Empresa } from './componentes/empresa/empresa';
 import { Pesquisar } from './componentes/empresa/pesquisar/pesquisar';
 import { Login } from './componentes/login/login';
 import { Funcionario } from './componentes/funcionario/funcionario';
+import { Estoque } from './componentes/estoque/estoque';
 
 export const routes: Routes = [
     
@@ -12,10 +13,11 @@ export const routes: Routes = [
     {path:'login', component:Login},
     {path:'principal',component:Nav,
      children:[
-       { path:'cargos', component:Crud},
+       { path: 'cargos', component:Crud},
        { path: 'empresa', component:Empresa},
        { path: 'pesquisar', component:Pesquisar},
-       { path: 'funcionario', component:Funcionario}
+       { path: 'funcionario', component:Funcionario},
+       { path: 'estoque', component:Estoque}
      ]}
     
 ];
