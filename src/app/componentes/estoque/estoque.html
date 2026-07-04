@@ -56,7 +56,7 @@
           
             <ng-container matColumnDef="dtInclusao">
               <th mat-header-cell *matHeaderCellDef> Data de Inclusão </th>
-              <td mat-cell *matCellDef="let estoque"> {{estoque.dtInclusao}} </td>
+              <td mat-cell *matCellDef="let estoque"> {{estoque.dtInclusao | date:'dd/MM/yyyy' }} </td>
             </ng-container>      
 
             <ng-container matColumnDef="acao">
@@ -64,8 +64,10 @@
               <td mat-cell *matCellDef="let estoque"> 
                 <section>                    
                     <div class="example-button-row">
-                      <button matButton="elevated" (click)="confirmacao(estoque.cdEstoque)">
-                        <mat-icon  aria-hidden="false" fontIcon="delete"></mat-icon>Excluir</button>
+                        <button matButton="elevated" (click)="confirmacao(estoque.cdEstoque)">
+                          <mat-icon  aria-hidden="false" fontIcon="delete"></mat-icon>Excluir</button>
+                        <button matButton="elevated">
+                          <mat-icon  aria-hidden="false" fontIcon="check_circle"></mat-icon>Selecionar</button>                        
                     </div>
                   </section>
               </td>
