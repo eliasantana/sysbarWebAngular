@@ -120,11 +120,8 @@ export class Funcionario implements OnInit {
   
   pesquisarFuncionarioEmpresa(cdEmpresa: number):void{
       this.service.pesquisafuncionarioPorEmpresa(cdEmpresa).subscribe({
-          next:(funcionariosEmpresa)=>{            
-           //teste
-           // this.funcionarios.data=funcionariosEmpresa;
-           this.funcionarios.data=[...funcionariosEmpresa];            
-           //this.campofiltro.nativeElement.focus();
+          next:(funcionariosEmpresa)=>{                       
+           this.funcionarios.data=[...funcionariosEmpresa];                       
            this.empresaSelecionada=cdEmpresa;           
           },
           error:(erro)=>{

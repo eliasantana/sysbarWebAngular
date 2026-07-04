@@ -6,6 +6,8 @@ import { Pesquisar } from './componentes/empresa/pesquisar/pesquisar';
 import { Login } from './componentes/login/login';
 import { Funcionario } from './componentes/funcionario/funcionario';
 import { Estoque } from './componentes/estoque/estoque';
+import { Component } from '@angular/core';
+import { Produtos } from './componentes/produtos/produtos';
 
 export const routes: Routes = [
     
@@ -17,7 +19,8 @@ export const routes: Routes = [
        { path: 'empresa', component:Empresa},
        { path: 'pesquisar', component:Pesquisar},
        { path: 'funcionario', component:Funcionario},
-       { path: 'estoque', component:Estoque}
+       { path: 'estoque', component:Estoque},
+       {path: 'produto', component:Produtos}
      ]}
     
 ];

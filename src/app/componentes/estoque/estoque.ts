@@ -12,6 +12,7 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 import {MatDividerModule} from '@angular/material/divider';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -26,7 +27,7 @@ import {MatDividerModule} from '@angular/material/divider';
             MatSelectModule,
             MatButtonModule,
             MatTableModule,
-            MatDividerModule
+            MatDividerModule, CommonModule
             
           ],
   templateUrl: './estoque.html',
@@ -122,6 +123,7 @@ export class Estoque {
             console.log('EMPRESA LOGADA ->', this,this.empresaLogada);
         },
         error:(erro)=>{
+            this.estoques.data=[];
             console.log('Não foi possível listar os estoques cadastrados!');
         }
       });

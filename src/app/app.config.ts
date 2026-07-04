@@ -3,6 +3,8 @@ import { routes } from './app.routes';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { getPortuguesePaginatorIntl } from './modelo/paginator-ptbr';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 
 export const appConfig: ApplicationConfig = {
@@ -12,6 +14,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()), 
     
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: MatPaginatorIntl,
+      useFactory:getPortuguesePaginatorIntl
+    }
+    
   ]
 };
