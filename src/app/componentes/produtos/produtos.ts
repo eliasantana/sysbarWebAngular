@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { RouterModule } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
@@ -15,6 +15,9 @@ import {JsonPipe} from '@angular/common';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {FormsModule} from '@angular/forms';
 import { ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ModalCadastro } from './modal-cadastro/modal-cadastro';
+import { MatIconModule } from '@angular/material/icon';
 
 export class PaginatorConfigurableExample {
   length = 50;
@@ -50,7 +53,12 @@ export class PaginatorConfigurableExample {
             MatFormFieldModule, 
             MatInputModule, 
             MatSelectModule,
-          MatButtonModule, MatTableModule, CommonModule, MatPaginatorModule, MatSlideToggleModule, FormsModule],
+            MatButtonModule, 
+            MatTableModule, 
+            CommonModule, 
+            MatPaginatorModule,
+            MatSlideToggleModule, 
+            FormsModule, MatIconModule],
   templateUrl: './produtos.html',
   styleUrl: './produtos.css',
 })
@@ -97,7 +105,10 @@ export class Produtos {
 
   colunas:string[]=['cdProduto', 'cdNCM','cdInterno','dsProduto','tipo','dtInclusao','snAtivo','acao'];
   constructor(private service:ProdutoServices){}
-
+  
+  //Injetando o MatDialog responsável por acionar o modal
+  private dialog = inject(MatDialog);
+  
   ngOnInit(){
     this.listarTodosOsProdutos();
   }
@@ -116,6 +127,23 @@ export class Produtos {
       }
     });
   }
- 
+  //Responsável por chamar o modal cadastro
+  cadastro():void{
+      const dialogRef = this.dialog.open(ModalCadastro, {
+        width:'600px',
+        height:'400px',
+        data:{
+            titulo:'Cadastrar Produto'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((confirmado:boolean)=>{
+        if (confirmado){
+          console.log('Ação de Confirmação!');
+        }else{
+          console.log('Ação de Candelamento!');
+        }
+      });
+  }
 
 }

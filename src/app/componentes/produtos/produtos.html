@@ -2,44 +2,13 @@
     <div class="titulo">
         <h1>Cadastro Geral de Produtos</h1>
     </div>
-    <div class="formulario">
-         <form>
-            <mat-form-field hintLabel="Max 10 characters" class="id">
-                <mat-label>Código</mat-label>
-                <input type="text" matInput>                
-            </mat-form-field>                  
-            <mat-form-field class="pequeno2">
-                <mat-label>Código NCM</mat-label>
-                <input type="text" matInput> 
-            </mat-form-field>      
-            <mat-form-field class="pequeno2">
-                <mat-label>Código Interno</mat-label>
-                <input type="text" matInput> 
-            </mat-form-field>      
-            <mat-form-field class="medio">
-                <mat-label>Descrição do Produto</mat-label>
-                <input type="text" matInput> 
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Tipo do Produto</mat-label>
-                <mat-select>
-                    <mat-option value="BA">Alcólico</mat-option>
-                    <mat-option value="CO">Cozinha</mat-option>
-                    <mat-option value="NA">Não Alcólico</mat-option>
-                </mat-select>
-            </mat-form-field>      
-            <mat-form-field>
-                <mat-label>Produto Ativo?</mat-label>
-                <mat-select>
-                    <mat-option value="S">Sim</mat-option>
-                    <mat-option value="N">Não</mat-option>                   
-                </mat-select>
-            </mat-form-field>      
-        </form>  
-        <div class="botoes">
+    <div class="formulario">        
+        <div class="abrirCadastro">
             <section>                
                 <div class="example-button-row">
-                  <button matButton="elevated">Cadastrar</button>                  
+                  <button class="btnAbrirCadastro" (click)="cadastro()">
+                    <mat-icon aria-hidden="false" aria-label="Adiciona um produto" fontIcon="add_circle"></mat-icon> Cadastrar Produto
+                  </button>                  
                 </div>
               </section>
         </div>

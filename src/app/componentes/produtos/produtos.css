@@ -54,4 +54,18 @@
     margin-left: 20px;
     margin-right: 20px;
  }
- 
+ .abrirCadastro{
+    display: flex;
+    justify-content: right;
+    margin-right: 20px;    
+ }
+ .btnAbrirCadastro{
+    display: flex;
+    background-color: rgb(83, 83, 134);
+    color: white;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 5px auto;
+ }
