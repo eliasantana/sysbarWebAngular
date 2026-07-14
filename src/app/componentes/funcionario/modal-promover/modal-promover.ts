@@ -26,6 +26,7 @@ export class ModalPromover {
 
   private dialogRef=inject(MatDialogRef<ModalPromover>);
   public data = inject<ModalPromoverData>(MAT_DIALOG_DATA);
+  
   cargos:Cargo[]=[];
   constructor(private cargoServices:Service){}
   private cargoSelecionado:number=0;

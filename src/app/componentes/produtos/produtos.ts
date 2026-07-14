@@ -18,6 +18,8 @@ import { ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalCadastro } from './modal-cadastro/modal-cadastro';
 import { MatIconModule } from '@angular/material/icon';
+import { Empresa } from 'src/app/modelo/Empresa';
+import { Produto } from 'src/app/modelo/Produto';
 
 export class PaginatorConfigurableExample {
   length = 50;
@@ -108,9 +110,10 @@ export class Produtos {
   
   //Injetando o MatDialog responsável por acionar o modal
   private dialog = inject(MatDialog);
-  
+    
   ngOnInit(){
     this.listarTodosOsProdutos();
+    this.formularioProduto;
   }
   ngAfterViewInit():void{
     this.vetorProdutos.paginator=this.paginator;
@@ -127,23 +130,41 @@ export class Produtos {
       }
     });
   }
+
+  
   //Responsável por chamar o modal cadastro
   cadastro():void{
       const dialogRef = this.dialog.open(ModalCadastro, {
         width:'600px',
-        height:'400px',
+        height:'500px',
         data:{
             titulo:'Cadastrar Produto'
         }
       });
-
-      dialogRef.afterClosed().subscribe((confirmado:boolean)=>{
-        if (confirmado){
-          console.log('Ação de Confirmação!');
-        }else{
-          console.log('Ação de Candelamento!');
-        }
+      //Recuperando os dados passados pelo componente modal Cadastro
+      dialogRef.afterClosed().subscribe((formularioCadastroProduto)=>{        
+            this.service.adicionar(formularioCadastroProduto).subscribe({
+            next:(dados)=>{
+              console.log('Produto enviado com sucesso!');
+              this.listarTodosOsProdutos();
+            },
+            error:(erro)=>{
+              console.log('Erro ao tentar enviar o produto!');
+            }
+        });
       });
   }
+
+  alterar(objeto:Produto):void{
+    const dialogRef = this.dialog.open(ModalCadastro, {
+      width:'600px',
+      height:'500px',
+      data:{
+          titulo:'Cadastrar Produto',
+          produto:objeto
+      }      
+    });       
+  }
+
 
 }

@@ -8,13 +8,18 @@ import { EmptyError, Observable } from 'rxjs';
 export class ProdutoServices {
 
   private urlListarProduto='http://localhost:8081/produto/listar';
+  private urlAdicionarProduto='http://localhost:8081/produto';
   
   constructor(private http:HttpClient){}
 
-  listar():Observable<Produto[]>{
-    console.log('END POINT -> ', this.urlListarProduto)
+  listar():Observable<Produto[]>{    
     return  this.http.get<Produto[]>(this.urlListarProduto);
   };
+
+  adicionar(obj:any):Observable<any>{
+      return this.http.post<any>(this.urlAdicionarProduto,obj);
+  }
+
 
  
 }

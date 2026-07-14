@@ -2,23 +2,23 @@
     <h2>Cadastrar Produtos</h2>
 </div>
 <div class="container">
-    <form class="formulario">
+    <form class="formulario" [formGroup]="formularioCadastroProduto">
         <table >
             <tr>
                 <td>
                     <mat-form-field hintLabel="Max 10 characters" class="id">
                         <mat-label>Código</mat-label>
-                        <input type="text" matInput>                
+                        <input type="number" matInput readonly="true" formControlName="cdProduto">                
                     </mat-form-field>
                     <mat-form-field class="pequeno2">
                         <mat-label>Código NCM</mat-label>
-                        <input type="text" matInput> 
+                        <input type="number" matInput formControlName="cdNCM"> 
                     </mat-form-field>                       
                 </td>
                 <td>
                     <mat-form-field class="pequeno2">
                         <mat-label>Código Interno</mat-label>
-                        <input type="text" matInput> 
+                        <input type="number" matInput formControlName="cdInterno"> 
                     </mat-form-field>   
                 </td>                
             </tr>
@@ -26,7 +26,7 @@
                 <td colspan="2">
                     <mat-form-field class="grande">
                         <mat-label>Descrição do Produto</mat-label>
-                        <input type="text" matInput> 
+                        <input type="text" matInput formControlName="dsProduto"> 
                     </mat-form-field>
                 </td>
             </tr>
@@ -34,7 +34,7 @@
                 <td>
                     <mat-form-field>
                         <mat-label>Tipo do Produto</mat-label>
-                        <mat-select>
+                        <mat-select formControlName="tipo">
                             <mat-option value="BA">Alcólico</mat-option>
                             <mat-option value="CO">Cozinha</mat-option>
                             <mat-option value="NA">Não Alcólico</mat-option>
@@ -42,20 +42,30 @@
                     </mat-form-field>                          
                 </td>
                 <td>
-                    <mat-form-field>
+                    <mat-form-field >
                         <mat-label>Produto Ativo?</mat-label>
-                        <mat-select>
+                        <mat-select formControlName="snAtivo">
                             <mat-option value="S">Sim</mat-option>
                             <mat-option value="N">Não</mat-option>                   
                         </mat-select>
                     </mat-form-field> 
                 </td>
-            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field>
+                        <mat-label>Selecione uma data</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="dtInclusao">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                </td>
+            </tr>            
         </table>        
     </form>    
 </div>
 <div class="botoes">
-    <button matButton="elevated">
+    <button matButton="elevated" [disabled]="formularioCadastroProduto.invalid" (click)="onConfirmar()">
     <mat-icon aria-hidden="false" aria-label="Adiciona um produto" fontIcon="add_circle"></mat-icon>Adicionar
     </button>          
     <button matButton="elevated" (click)="onCancelar()">
