@@ -9,6 +9,7 @@ export class ProdutoServices {
 
   private urlListarProduto='http://localhost:8081/produto/listar';
   private urlAdicionarProduto='http://localhost:8081/produto';
+  private urlAlterarProduto='http://localhost:8081/produto/alterar';
   
   constructor(private http:HttpClient){}
 
@@ -18,6 +19,10 @@ export class ProdutoServices {
 
   adicionar(obj:any):Observable<any>{
       return this.http.post<any>(this.urlAdicionarProduto,obj);
+  }
+
+  alterar(obj:any):Observable<any>{
+    return this.http.put<any>(this.urlAlterarProduto,obj);
   }
 
 

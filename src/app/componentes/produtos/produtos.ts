@@ -20,6 +20,8 @@ import { ModalCadastro } from './modal-cadastro/modal-cadastro';
 import { MatIconModule } from '@angular/material/icon';
 import { Empresa } from 'src/app/modelo/Empresa';
 import { Produto } from 'src/app/modelo/Produto';
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 export class PaginatorConfigurableExample {
   length = 50;
@@ -60,7 +62,7 @@ export class PaginatorConfigurableExample {
             CommonModule, 
             MatPaginatorModule,
             MatSlideToggleModule, 
-            FormsModule, MatIconModule],
+            FormsModule, MatIconModule, MatSlideToggleModule],
   templateUrl: './produtos.html',
   styleUrl: './produtos.css',
 })
@@ -110,7 +112,10 @@ export class Produtos {
   
   //Injetando o MatDialog responsável por acionar o modal
   private dialog = inject(MatDialog);
-    
+  
+  public titulo='';
+  nmBotao='';
+  
   ngOnInit(){
     this.listarTodosOsProdutos();
     this.formularioProduto;
@@ -134,11 +139,12 @@ export class Produtos {
   
   //Responsável por chamar o modal cadastro
   cadastro():void{
+      this.titulo='Cadastro de Produtos';
       const dialogRef = this.dialog.open(ModalCadastro, {
         width:'600px',
         height:'500px',
         data:{
-            titulo:'Cadastrar Produto'
+            titulo:this.titulo
         }
       });
       //Recuperando os dados passados pelo componente modal Cadastro
@@ -156,15 +162,29 @@ export class Produtos {
   }
 
   alterar(objeto:Produto):void{
+    this.titulo='Alterar Produto';
     const dialogRef = this.dialog.open(ModalCadastro, {
       width:'600px',
       height:'500px',
       data:{
-          titulo:'Cadastrar Produto',
+          titulo:this.titulo,
           produto:objeto
       }      
-    });       
+    }); 
+
+    dialogRef.afterClosed().subscribe((formularioCadastroProduto)=>{
+        this.service.alterar(formularioCadastroProduto).subscribe({
+          next:(dados)=>{
+            console.log('Dados Alterados com sucesso!');
+            this.listarTodosOsProdutos();
+          },
+          error:(erro:HttpErrorResponse)=>{
+            console.log('Erro:',erro.message);            
+          }
+        });
+      });
+    }
   }
 
 
-}
+

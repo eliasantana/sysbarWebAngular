@@ -32,7 +32,7 @@ export class ModalCadastro {
 
     private dialogRef = inject(MatDialogRef<ModalCadastro>);
     public data = inject<ModalCadastroData>(MAT_DIALOG_DATA);
-    
+    public titulo:String='';
   formularioCadastroProduto = new FormGroup({
         cdProduto: new FormControl<number | null>(null),
         cdNCM: new FormControl<String | null>(null),
