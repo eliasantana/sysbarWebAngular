@@ -114,7 +114,7 @@ export class Produtos {
   private dialog = inject(MatDialog);
   
   public titulo='';
-  nmBotao='';
+  public nmBotao='';
   
   ngOnInit(){
     this.listarTodosOsProdutos();
@@ -140,11 +140,13 @@ export class Produtos {
   //Responsável por chamar o modal cadastro
   cadastro():void{
       this.titulo='Cadastro de Produtos';
+      
       const dialogRef = this.dialog.open(ModalCadastro, {
         width:'600px',
         height:'500px',
         data:{
-            titulo:this.titulo
+            titulo:this.titulo,
+            nomeDoBotao:'Adicionar'
         }
       });
       //Recuperando os dados passados pelo componente modal Cadastro
@@ -162,13 +164,14 @@ export class Produtos {
   }
 
   alterar(objeto:Produto):void{
-    this.titulo='Alterar Produto';
+    this.titulo='Alterar Produto';   
     const dialogRef = this.dialog.open(ModalCadastro, {
       width:'600px',
       height:'500px',
       data:{
           titulo:this.titulo,
-          produto:objeto
+          produto:objeto,
+          nomeDoBotao:'Alterar'
       }      
     }); 
 

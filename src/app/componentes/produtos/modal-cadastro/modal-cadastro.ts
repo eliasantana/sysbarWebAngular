@@ -15,6 +15,7 @@ import { Produto } from 'src/app/modelo/Produto';
 export interface ModalCadastroData{
    titulo:String;
    produto:Produto
+   nomeDoBotao:''
 }
 
 @Component({
@@ -33,6 +34,7 @@ export class ModalCadastro {
     private dialogRef = inject(MatDialogRef<ModalCadastro>);
     public data = inject<ModalCadastroData>(MAT_DIALOG_DATA);
     public titulo:String='';
+   
   formularioCadastroProduto = new FormGroup({
         cdProduto: new FormControl<number | null>(null),
         cdNCM: new FormControl<String | null>(null),
@@ -44,7 +46,9 @@ export class ModalCadastro {
     })
     //Recebendo dados da view
 
-    constructor(private services:ProdutoServices){ }
+    constructor(private services:ProdutoServices){ 
+      
+    }
     ngOnInit(){
       //Recebe o objeto selecionado na view e adiciona ao formulário
       this.formularioCadastroProduto.patchValue({
@@ -58,7 +62,7 @@ export class ModalCadastro {
       });
       
     }
-
+    
     onConfirmar():void{
       const dadosFormularioCadastro = this.formularioCadastroProduto.getRawValue();  
       this.dialogRef.close(dadosFormularioCadastro);   

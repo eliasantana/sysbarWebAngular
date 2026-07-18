@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Produto } from '../modelo/Produto';
 import { EmptyError, Observable } from 'rxjs';
+import { signal } from '@angular/core';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +14,7 @@ export class ProdutoServices {
   private urlAlterarProduto='http://localhost:8081/produto/alterar';
   
   constructor(private http:HttpClient){}
-
+   
   listar():Observable<Produto[]>{    
     return  this.http.get<Produto[]>(this.urlListarProduto);
   };
@@ -25,6 +27,6 @@ export class ProdutoServices {
     return this.http.put<any>(this.urlAlterarProduto,obj);
   }
 
-
+  
  
 }
