@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Empresa } from 'src/app/modelo/Empresa';
 import { Produto } from 'src/app/modelo/Produto';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 
 
 export class PaginatorConfigurableExample {
@@ -114,7 +115,7 @@ export class Produtos {
   private dialog = inject(MatDialog);
   
   public titulo='';
-  public nmBotao='';
+  public nmBotao='';  
   
   ngOnInit(){
     this.listarTodosOsProdutos();
@@ -135,8 +136,12 @@ export class Produtos {
       }
     });
   }
+  //Filtra o valor informado no input 
+  filtrar(event:Event){
+    const filtroValue = (event.target as HTMLInputElement).value;
+    this.vetorProdutos.filter=filtroValue.trim().toLowerCase();
+  }
 
-  
   //Responsável por chamar o modal cadastro
   cadastro():void{
       this.titulo='Cadastro de Produtos';
@@ -156,7 +161,7 @@ export class Produtos {
               console.log('Produto enviado com sucesso!');
               this.listarTodosOsProdutos();
             },
-            error:(erro)=>{
+            error:(erro)=>{             
               console.log('Erro ao tentar enviar o produto!');
             }
         });
@@ -187,7 +192,35 @@ export class Produtos {
         });
       });
     }
-  }
 
+    //Chama a confirmação de Exclusão do produto
+    excluir(cdProduto:number):void{
+
+      const dialogRef = this.dialog.open(ConfirmeDialog, {
+          width:'400px',
+          data:{
+            titulo:'Confirmação de Exclusão!',
+            mensagem:'Confirma a exclusão do Produto ' +  cdProduto + '? '
+          }
+      });
+
+      dialogRef.afterClosed().subscribe((confirma:boolean)=>{
+        if(confirma){
+            this.service.excluir(cdProduto).subscribe({
+                next:(dados)=>{
+                   alert('Produto Excluído com sucesso!');
+                   this.listarTodosOsProdutos();
+                },
+                error:(erro)=>{
+                  console.log('Erro ao tentar excluir o produto selecionado! ');
+                }
+            });
+        }
+      })
+
+    }
+
+ 
+  }
 
 

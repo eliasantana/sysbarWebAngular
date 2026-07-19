@@ -38,7 +38,7 @@ export class ModalCadastro {
   formularioCadastroProduto = new FormGroup({
         cdProduto: new FormControl<number | null>(null),
         cdNCM: new FormControl<String | null>(null),
-        cdInterno: new FormControl<String | null>(null),
+        cdInterno: new FormControl<String | null>(null,Validators.required),
         dsProduto: new FormControl<String | null>(null),
         tipo: new FormControl<String | null>(null),
         dtInclusao: new FormControl<Date | null> (null),
