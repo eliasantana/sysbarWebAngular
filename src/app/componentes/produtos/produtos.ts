@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { RouterModule } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
@@ -15,6 +15,14 @@ import {JsonPipe} from '@angular/common';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {FormsModule} from '@angular/forms';
 import { ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ModalCadastro } from './modal-cadastro/modal-cadastro';
+import { MatIconModule } from '@angular/material/icon';
+import { Empresa } from 'src/app/modelo/Empresa';
+import { Produto } from 'src/app/modelo/Produto';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
+
 
 export class PaginatorConfigurableExample {
   length = 50;
@@ -50,7 +58,12 @@ export class PaginatorConfigurableExample {
             MatFormFieldModule, 
             MatInputModule, 
             MatSelectModule,
-          MatButtonModule, MatTableModule, CommonModule, MatPaginatorModule, MatSlideToggleModule, FormsModule],
+            MatButtonModule, 
+            MatTableModule, 
+            CommonModule, 
+            MatPaginatorModule,
+            MatSlideToggleModule, 
+            FormsModule, MatIconModule, MatSlideToggleModule],
   templateUrl: './produtos.html',
   styleUrl: './produtos.css',
 })
@@ -97,9 +110,16 @@ export class Produtos {
 
   colunas:string[]=['cdProduto', 'cdNCM','cdInterno','dsProduto','tipo','dtInclusao','snAtivo','acao'];
   constructor(private service:ProdutoServices){}
-
+  
+  //Injetando o MatDialog responsável por acionar o modal
+  private dialog = inject(MatDialog);
+  
+  public titulo='';
+  public nmBotao='';  
+  
   ngOnInit(){
     this.listarTodosOsProdutos();
+    this.formularioProduto;
   }
   ngAfterViewInit():void{
     this.vetorProdutos.paginator=this.paginator;
@@ -116,6 +136,91 @@ export class Produtos {
       }
     });
   }
- 
+  //Filtra o valor informado no input 
+  filtrar(event:Event){
+    const filtroValue = (event.target as HTMLInputElement).value;
+    this.vetorProdutos.filter=filtroValue.trim().toLowerCase();
+  }
 
-}
+  //Responsável por chamar o modal cadastro
+  cadastro():void{
+      this.titulo='Cadastro de Produtos';
+      
+      const dialogRef = this.dialog.open(ModalCadastro, {
+        width:'600px',
+        height:'500px',
+        data:{
+            titulo:this.titulo,
+            nomeDoBotao:'Adicionar'
+        }
+      });
+      //Recuperando os dados passados pelo componente modal Cadastro
+      dialogRef.afterClosed().subscribe((formularioCadastroProduto)=>{        
+            this.service.adicionar(formularioCadastroProduto).subscribe({
+            next:(dados)=>{
+              console.log('Produto enviado com sucesso!');
+              this.listarTodosOsProdutos();
+            },
+            error:(erro)=>{             
+              console.log('Erro ao tentar enviar o produto!');
+            }
+        });
+      });
+  }
+
+  alterar(objeto:Produto):void{
+    this.titulo='Alterar Produto';   
+    const dialogRef = this.dialog.open(ModalCadastro, {
+      width:'600px',
+      height:'500px',
+      data:{
+          titulo:this.titulo,
+          produto:objeto,
+          nomeDoBotao:'Alterar'
+      }      
+    }); 
+
+    dialogRef.afterClosed().subscribe((formularioCadastroProduto)=>{
+        this.service.alterar(formularioCadastroProduto).subscribe({
+          next:(dados)=>{
+            console.log('Dados Alterados com sucesso!');
+            this.listarTodosOsProdutos();
+          },
+          error:(erro:HttpErrorResponse)=>{
+            console.log('Erro:',erro.message);            
+          }
+        });
+      });
+    }
+
+    //Chama a confirmação de Exclusão do produto
+    excluir(cdProduto:number):void{
+
+      const dialogRef = this.dialog.open(ConfirmeDialog, {
+          width:'400px',
+          data:{
+            titulo:'Confirmação de Exclusão!',
+            mensagem:'Confirma a exclusão do Produto ' +  cdProduto + '? '
+          }
+      });
+
+      dialogRef.afterClosed().subscribe((confirma:boolean)=>{
+        if(confirma){
+            this.service.excluir(cdProduto).subscribe({
+                next:(dados)=>{
+                   alert('Produto Excluído com sucesso!');
+                   this.listarTodosOsProdutos();
+                },
+                error:(erro)=>{
+                  console.log('Erro ao tentar excluir o produto selecionado! ');
+                }
+            });
+        }
+      })
+
+    }
+
+ 
+  }
+
+
