@@ -13,23 +13,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterModule } from "@angular/router";
 
 
 
 @Component({
   selector: 'app-estoque',
   imports: [
-            MatFormFieldModule, 
-            FormsModule, 
-            MatIconModule,
-            MatInputModule, 
-            ReactiveFormsModule, 
-            MatSelectModule,
-            MatButtonModule,
-            MatTableModule,
-            MatDividerModule, CommonModule
-            
-          ],
+    MatFormFieldModule,
+    FormsModule,
+    MatIconModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatTableModule,
+    MatDividerModule, CommonModule,
+    RouterLink, RouterModule
+],
   templateUrl: './estoque.html',
   styleUrl: './estoque.css',
 })
@@ -41,6 +42,7 @@ export class Estoque {
   exbibePesquisa:boolean=false;
   empresas:Empresa[]=[];
   empresaLogada:number=0;
+  btnAdicionaProdutoEstoque=false;
 
   colunas:string[]=[
     'cdEstoque',
@@ -119,12 +121,11 @@ export class Estoque {
         next:(dados)=>{
             console.log('Dados recebidos com sucesso!');
             this.estoques.data = [...dados];
-            console.log('dados:'+this.estoque.values);
-            console.log('EMPRESA LOGADA ->', this,this.empresaLogada);
+            this.btnAdicionaProdutoEstoque=true;            
         },
         error:(erro)=>{
             this.estoques.data=[];
-            console.log('Não foi possível listar os estoques cadastrados!');
+            console.log('Não foi possível listar os estoques cadastrados!');            
         }
       });
   }

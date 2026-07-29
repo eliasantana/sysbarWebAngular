@@ -43,6 +43,13 @@
             <mat-icon matSuffix aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
           </mat-form-field>   
         </form>
+        <div class="divBtnProdutoEstoque">
+          @if(btnAdicionaProdutoEstoque){
+            <button type="button" class="btnProdutoEstoque" routerLink="/principal/produtoestoque">
+              <mat-icon aria-hidden="false" aria-label="Adiciona um produto" fontIcon="add_circle"></mat-icon> Adicionar Produtos ao Estoque
+            </button>
+          }
+        </div>
         <table mat-table [dataSource]="estoques" class="mat-elevation-z8">    
             <ng-container matColumnDef="cdEstoque">
               <th mat-header-cell *matHeaderCellDef> Código </th>

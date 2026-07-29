@@ -1,5 +1,5 @@
 .container-formulario{    
-    width: 100%;
+    width: 98%;
     margin-left: 10px;
     margin-right: 10px;
     justify-content: center;
@@ -58,5 +58,6 @@ mat-form-field{
 
 .example-button-row{
     display: flex;  
-    gap: 5px;    
+    gap: 5px; 
+    justify-content: center;   
  }
