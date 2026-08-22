@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Estoque } from '../modelo/Estoque';
 
 
 export interface UsuarioLogado {
@@ -18,6 +19,11 @@ export interface UsuarioLogado {
   dsCargo: string;
 }
 
+export interface EstoqueSelecionado{
+  cdEstoque:String;
+  dsEstoque:String;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -28,6 +34,10 @@ export class LoginServices {
   private  urlAuth='http://localhost:8081/autentica';
   
   private usuarioLogado='';
+
+  private estoqueSelecionado='';
+
+  private objeto:any;
   
   constructor(private http:HttpClient){}
   
@@ -41,6 +51,16 @@ export class LoginServices {
      sessionStorage.setItem('usuarioLogado',JSON.stringify(obj));
   }
 
+  adicionarDadosDoEstoqueNaSessao(obj:any):void{ 
+     this.objeto=obj;  
+     console.log('REcuperando o código da empresa !',obj[0].empresa.cdEmpresa ); 
+     sessionStorage.setItem('estoqueSelecionado', JSON.stringify(obj[0]));
+  }
+  
+  recuperarDadosDoEstoque():EstoqueSelecionado| null {
+      this.estoqueSelecionado = this.estoqueSelecionado = sessionStorage.getItem('estoqueSelecionado')||'';
+      return this.estoqueSelecionado? JSON.parse(this.estoqueSelecionado) as EstoqueSelecionado:null;      
+  }
   recuperaDaSessao():UsuarioLogado | null{
     this.usuarioLogado = this.usuarioLogado =  sessionStorage.getItem('usuarioLogado') ||'';    
     return this.usuarioLogado ? JSON.parse(this.usuarioLogado) as UsuarioLogado:null;

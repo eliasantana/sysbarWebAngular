@@ -13,23 +13,25 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterModule } from "@angular/router";
+import { LoginServices } from 'src/app/services/login-services';
 
 
 
 @Component({
   selector: 'app-estoque',
   imports: [
-            MatFormFieldModule, 
-            FormsModule, 
-            MatIconModule,
-            MatInputModule, 
-            ReactiveFormsModule, 
-            MatSelectModule,
-            MatButtonModule,
-            MatTableModule,
-            MatDividerModule, CommonModule
-            
-          ],
+    MatFormFieldModule,
+    FormsModule,
+    MatIconModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatTableModule,
+    MatDividerModule, CommonModule,
+    RouterLink, RouterModule
+],
   templateUrl: './estoque.html',
   styleUrl: './estoque.css',
 })
@@ -41,6 +43,7 @@ export class Estoque {
   exbibePesquisa:boolean=false;
   empresas:Empresa[]=[];
   empresaLogada:number=0;
+  btnAdicionaProdutoEstoque=false;
 
   colunas:string[]=[
     'cdEstoque',
@@ -51,7 +54,7 @@ export class Estoque {
   
   estoques=new MatTableDataSource<any>();
   private confirmeDialog = inject(MatDialog);
-  constructor(private empresaServices:EmpresaServices, private services:EstoqueServices){}
+  constructor(private empresaServices:EmpresaServices, private services:EstoqueServices, private loginServices:LoginServices ){}
 
   ngOnInit(){
     this.listarEmpresa();
@@ -117,14 +120,15 @@ export class Estoque {
   listarEstoque(cdEmpresaLogada:number){
       this.services.listar(cdEmpresaLogada).subscribe({
         next:(dados)=>{
+            this.loginServices.adicionarDadosDoEstoqueNaSessao(dados);
             console.log('Dados recebidos com sucesso!');
             this.estoques.data = [...dados];
-            console.log('dados:'+this.estoque.values);
-            console.log('EMPRESA LOGADA ->', this,this.empresaLogada);
+            this.btnAdicionaProdutoEstoque=true; 
+            console.log(' dados estoque -> ', dados);    
         },
         error:(erro)=>{
             this.estoques.data=[];
-            console.log('Não foi possível listar os estoques cadastrados!');
+            console.log('Não foi possível listar os estoques cadastrados!');            
         }
       });
   }
