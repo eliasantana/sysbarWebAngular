@@ -14,6 +14,7 @@ import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule } from "@angular/router";
+import { LoginServices } from 'src/app/services/login-services';
 
 
 
@@ -53,7 +54,7 @@ export class Estoque {
   
   estoques=new MatTableDataSource<any>();
   private confirmeDialog = inject(MatDialog);
-  constructor(private empresaServices:EmpresaServices, private services:EstoqueServices){}
+  constructor(private empresaServices:EmpresaServices, private services:EstoqueServices, private loginServices:LoginServices ){}
 
   ngOnInit(){
     this.listarEmpresa();
@@ -119,9 +120,11 @@ export class Estoque {
   listarEstoque(cdEmpresaLogada:number){
       this.services.listar(cdEmpresaLogada).subscribe({
         next:(dados)=>{
+            this.loginServices.adicionarDadosDoEstoqueNaSessao(dados);
             console.log('Dados recebidos com sucesso!');
             this.estoques.data = [...dados];
-            this.btnAdicionaProdutoEstoque=true;            
+            this.btnAdicionaProdutoEstoque=true; 
+            console.log(' dados estoque -> ', dados);    
         },
         error:(erro)=>{
             this.estoques.data=[];

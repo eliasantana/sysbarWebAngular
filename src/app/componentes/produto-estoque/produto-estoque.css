@@ -38,6 +38,7 @@ mat-form-field{
 .example-button-row{
     display: flex;
     gap: 10px;
+    padding-top: 10px;
 }
 .btnProdutoEstoque{
     display: flex;
@@ -61,3 +62,6 @@ mat-form-field{
     gap: 5px; 
     justify-content: center;   
  }
+ .mat-shadow-2 {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
