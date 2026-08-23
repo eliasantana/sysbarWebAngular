@@ -1,0 +1,53 @@
+<h1 class="titulo">Cadastro de Mesas</h1>
+<div class="selecaogarcom">
+    <form [formGroup]="formulario">
+      <section>            
+        <div class="example-button-row">
+          <mat-form-field class="medio">
+            <mat-label>Selecione um Garçom</mat-label>
+            <mat-select  (selectionChange)="selecionaFuncionario($event.value)">
+             @for(f of vetorFuncionarios; track f.cdFuncionario){
+               <mat-option [value]="f.cdFuncionario">{{f.cdFuncionario}} - {{f.nome}}</mat-option>
+             }              
+           </mat-select>
+          </mat-form-field>
+          <mat-form-field class="medio">
+            <mat-label>Selecione um Empresa</mat-label>
+            <mat-select (selectionChange)="selecionaEmpresa($event.value)">
+              @for(e of vetorEmpresas; track e.cdEmpresa){
+                <mat-option [value]="e.cdEmpresa">{{e.cdEmpresa}} - {{e.nomeEmpresa}}</mat-option>
+              }
+            </mat-select>           
+          </mat-form-field>         
+          <button type="button" matButton="elevated" class="btnListar">Adicionar Mesa</button>                            
+        </div>
+      </section>
+    </form>
+    @if(mensagemErro){
+      <p>Atenção: {{mensagemErro}}</p>
+    }
+</div>
+<div class="container">
+  
+    @for (mesa of vetorMesas; track $index) {
+      
+      <mat-card class="cardmesa" appearance="outlined">
+          <mat-card-header>         
+            <mat-card-title>MESA: {{mesa.nrMesa}}</mat-card-title>      
+          </mat-card-header>
+          <img src="mesa.png"/>
+          <mat-card-content>            
+            <mat-chip-set aria-label="Fish selection">
+              @if(mesa.status=='L'){
+                <mat-chip>Livre</mat-chip>            
+              }@else{
+                <mat-chip>Ocupada</mat-chip>
+              }  
+            </mat-chip-set>            
+          </mat-card-content>
+          <mat-card-actions>          
+              <button matButton>Excluir Mesa</button>
+          </mat-card-actions>
+        </mat-card>
+      }
+</div>

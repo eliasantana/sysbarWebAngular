@@ -1,4 +1,5 @@
-export class Funionario{
+
+export class Funcionario{
     cdFuncionario:number=0;
     nome: string='';
     caminhoImagem: string='';

@@ -10,7 +10,7 @@
                         <mat-label>Descrição do Estoque</mat-label>
                         <input matInput #input formControlName="dsEstoque" placeholder="Informe o nome do Estoque aqui..."/>            
                     </mat-form-field>
-                    <mat-form-field formGroupName="empresa" class="medio3">
+                    <mat-form-field formGroupName="empresa" class="medio">
                         <mat-label>Selecione a empresa</mat-label>
                         <mat-select formControlName="cdEmpresa" (selectionChange)="listarEstoque($event.value)">
                             @for (empresa of empresas; track empresa.cdEmpresa) {
