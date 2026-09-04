@@ -19,7 +19,7 @@
               }
             </mat-select>           
           </mat-form-field>         
-          <button type="button" matButton="elevated" class="btnListar">Adicionar Mesa</button>                            
+          <button type="button" matButton="elevated" class="btnListar" (click)="abrirModalCadastroMesa()">Adicionar Mesa</button>                            
         </div>
       </section>
     </form>
@@ -29,7 +29,7 @@
 </div>
 <div class="container">
   
-    @for (mesa of vetorMesas; track $index) {
+    @for (mesa of vetorMesas; track mesa.nrMesa) {
       
       <mat-card class="cardmesa" appearance="outlined">
           <mat-card-header>         

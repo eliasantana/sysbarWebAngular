@@ -46,7 +46,7 @@ export class ModalTransferir{
   cdEmpDestino:number=0;
   cdEmpresaAtual:number=0;
   cdFuncionario:number=0;
-
+  
   constructor(private empresaServices:EmpresaServices, 
               private funcionarioService:FuncionarioServices){}
   

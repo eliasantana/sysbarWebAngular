@@ -1,0 +1,47 @@
+<div class="titulo">
+    <h2>Cadastro de Mesas</h2>
+</div>
+<div class="container">
+    <form class="formulario" [formGroup]="formCadMesa">
+        <table>            
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Empresa Atual</mat-label>
+                        <input matInput readonly="true" formControlName="cdEmpresa">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Cod. Funcionário</mat-label>
+                        <input matInput readonly="true" formControlName="cdFuncionario">
+                    </mat-form-field>
+                </td>        
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field class="grande">
+                        <mat-label>Nr. Mesa</mat-label>
+                        <!-- (keyup)="habilitaBotao()"-->
+                        <input type="number" min="1" matInput formControlName="nrMesa"  (keyup)="limpaMensagem()">
+                    </mat-form-field> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="mensagem">
+                        {{mensagem}}
+                    </div>
+                </td>
+            </tr>            
+            <tr>                
+                <td colspan="2">
+                    <div class="botoes">                        
+                        <button type="button" matButton="elevated" (click)="onCancelar()">Cancelar</button> 
+                        <button type="button" matButton="elevated" (click)="onConfirmar(nrMesa)" [disabled]="formCadMesa.invalid">Confirmar</button>                        
+                    </div>   
+                </td>
+            </tr>
+        </table> 
+    </form>
+</div>

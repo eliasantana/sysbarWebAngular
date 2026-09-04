@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
@@ -10,8 +10,12 @@ import { MemesasServices } from 'src/app/services/memesas-services';
 import { EmpresaServices } from 'src/app/services/empresa-services';
 import { Empresa } from 'src/app/modelo/Empresa';
 import { Mesa } from 'src/app/modelo/Mesa';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {MatChipsModule} from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalCadasroMesa, ModalCadastroMesaInterfaceOut } from './modal-cadasro-mesa/modal-cadasro-mesa';
+import { DialogRef } from '@angular/cdk/dialog';
+import { convertCompilerOptionsFromJson } from 'typescript';
 
 @Component({
   selector: 'app-mesas',
@@ -25,6 +29,7 @@ import {MatChipsModule} from '@angular/material/chips';
   templateUrl: './mesas.html',
   styleUrl: './mesas.css',
 })
+
 export class Mesas {
 
 constructor(private funcionarioServices:FuncionarioServices,
@@ -39,11 +44,18 @@ private nomeFuncionarioSelecionado:string='';
 empresaFuncionarioSelecionado:number=0;
 botaoListarDesabilitado:boolean=true;
 mensagemErro:string='';
+mesa:Mesa=new Mesa();
+nrMesa!:number;
+mensagem:string='';
 
-//Avalidar a necessidade desse form group
+//injeta o Modal
+private dialog = inject(MatDialog);
+
+//Formulário cadastro de mesas
 formulario=new FormGroup({
   cdFuncionario:new FormControl<number | null>(null),
-  nomeFuncionario:new FormControl('')
+  cdEmpresa:new FormControl(''),
+  nrMesa:new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
 });
 
 ngOnInit(){
@@ -79,6 +91,8 @@ listarEmpresas(){
 
 selecionaFuncionario(cdFuncionario:number){  
   this.funcionarioSelecioando=cdFuncionario; 
+  console.log('Funcionário Selecionado -> ',this.funcionarioSelecioando)
+  this.funcionarioSelecioando=cdFuncionario; 
   this.mensagemErro='' ; 
   this.vetorMesas=[];   
 }
@@ -92,7 +106,7 @@ selecionaEmpresa(cdEmpresa:number){
 
 listarMesasFuncionario(){
     this.services.listarMesaFuncionario(this.empresaFuncionarioSelecionado, this.funcionarioSelecioando).subscribe({
-      next:(dados)=>{
+      next:(dados)=>{        
         this.vetorMesas=[...dados];
         if (this.mensagemErro){
           this.mensagemErro='';
@@ -105,5 +119,39 @@ listarMesasFuncionario(){
         console.log('Não foi possivel localizar as mesas deste Funcionário -> ','erro:', erro.error.message);
       }
     });
+}
+
+abrirModalCadastroMesa(){
+  const dialogref = this.dialog.open(ModalCadasroMesa, {
+    width:'600px',
+    height:'400px',
+    data:{
+       titulo:'Cadastro de Mesas',
+       cdFuncionario:this.funcionarioSelecioando,
+       cdEmpresaFuncionario:this.empresaFuncionarioSelecionado,
+       nrMesa:null,
+       mensagem:this.mensagem
+    }
+  });
+  dialogref.afterClosed().subscribe((formulario)=>{
+     console.log('Dados recebido pela confirmação ', formulario);
+     if (formulario){
+        console.log('Enviando dados!');
+        this.services.adicionarMesa(formulario.cdEmpresa, formulario.nrMesa, formulario.cdFuncionario).subscribe({
+          next:(dados)=>{              
+              this.empresaFuncionarioSelecionado=formulario.cdEmpresa;
+              this.funcionarioSelecioando=formulario.cdFuncionario;  
+              
+              this.listarMesasFuncionario();
+          },
+          error:(erro)=>{
+              console.log('Erro ao tentar adicionar uma mesa!',erro);
+              this.mensagem=erro.error.message;
+              console.log('msg->',this.mensagem);
+              this.abrirModalCadastroMesa();
+          }
+       });
+     }
+    })
 }
 }

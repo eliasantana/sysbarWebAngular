@@ -9,10 +9,16 @@ import { Mesa } from '../modelo/Mesa';
 export class MemesasServices {
     
   private urlMesasFuncionario='http://localhost:8081/mesa/garcom/';
+  private urlAdicionarMesa='http://localhost:8081/mesa/adicionar/';
+  ///mesa/adicionar/{idemplogada}/{nrmesa}/{idfuncionario}
 
   constructor(private http:HttpClient){}
 
   listarMesaFuncionario(cdEmpresa:number, cdFuncionario:number):Observable<any>{    
     return this.http.get<Mesa[]>(this.urlMesasFuncionario+cdEmpresa+'/'+cdFuncionario);
+  }
+
+  adicionarMesa(cdEmpresa:number, nrMesa:number, cdFuncionario:number):Observable<any>{
+    return this.http.post<any>(this.urlAdicionarMesa+cdEmpresa+'/'+nrMesa+'/'+cdFuncionario,null);
   }
 }
