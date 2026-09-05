@@ -27,10 +27,8 @@
       <p>Atenção: {{mensagemErro}}</p>
     }
 </div>
-<div class="container">
-  
-    @for (mesa of vetorMesas; track mesa.nrMesa) {
-      
+<div class="container">   
+    @for (mesa of vetorMesas; track mesa.cdMesa) {      
       <mat-card class="cardmesa" appearance="outlined">
           <mat-card-header>         
             <mat-card-title>MESA: {{mesa.nrMesa}}</mat-card-title>      
@@ -39,14 +37,17 @@
           <mat-card-content>            
             <mat-chip-set aria-label="Fish selection">
               @if(mesa.status=='L'){
-                <mat-chip>Livre</mat-chip>            
+                <mat-chip class="chip-livre">Livre</mat-chip>            
               }@else{
-                <mat-chip>Ocupada</mat-chip>
+                <mat-chip class="chip-ocupada">Ocupada</mat-chip>
               }  
             </mat-chip-set>            
           </mat-card-content>
-          <mat-card-actions>          
-              <button matButton>Excluir Mesa</button>
+          <mat-card-actions> 
+            @if(mesa.status=='L'){
+              <button matButton>
+                <mat-icon aria-hidden="false" aria-label="Excluir" fontIcon="delete"></mat-icon>Excluir</button>
+            }         
           </mat-card-actions>
         </mat-card>
       }

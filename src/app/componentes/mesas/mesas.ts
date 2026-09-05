@@ -16,7 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalCadasroMesa, ModalCadastroMesaInterfaceOut } from './modal-cadasro-mesa/modal-cadasro-mesa';
 import { DialogRef } from '@angular/cdk/dialog';
 import { convertCompilerOptionsFromJson } from 'typescript';
-
+import { MatIconModule, MatIcon } from '@angular/material/icon';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-mesas',
   standalone:true,
@@ -24,8 +25,8 @@ import { convertCompilerOptionsFromJson } from 'typescript';
     MatButtonModule,
     MatSelectModule,
     MatInputModule,
-    MatFormFieldModule,  
-    ReactiveFormsModule, MatChipsModule],
+    MatFormFieldModule,
+    ReactiveFormsModule, MatChipsModule, MatIconModule],
   templateUrl: './mesas.html',
   styleUrl: './mesas.css',
 })
@@ -34,8 +35,9 @@ export class Mesas {
 
 constructor(private funcionarioServices:FuncionarioServices,
             private services:MemesasServices,
-            private empresasServices:EmpresaServices){}
-
+            private empresasServices:EmpresaServices,  
+            private cdr: ChangeDetectorRef){}
+ 
 vetorFuncionarios:Funcionario[]=[];
 vetorEmpresas:Empresa[]=[];
 vetorMesas:Mesa[]=[];
@@ -62,7 +64,6 @@ ngOnInit(){
     this.listarFuncionarioCargo();
     this.listarEmpresas();   
 }
-
 
 listarFuncionarioCargo(){
     const cdCargo:number=1; // 1 Retornar apenas Garçom
@@ -104,19 +105,19 @@ selecionaEmpresa(cdEmpresa:number){
   this.listarMesasFuncionario();
 }
 
-listarMesasFuncionario(){
+listarMesasFuncionario() {
     this.services.listarMesaFuncionario(this.empresaFuncionarioSelecionado, this.funcionarioSelecioando).subscribe({
-      next:(dados)=>{        
-        this.vetorMesas=[...dados];
-        if (this.mensagemErro){
-          this.mensagemErro='';
-        }
-        console.log('Mesas retornados com sucesso!', this.vetorMesas);
-      }, 
-      error:(erro)=>{
-        this.mensagemErro=erro.error.message;
-        this.vetorMesas=[];
-        console.log('Não foi possivel localizar as mesas deste Funcionário -> ','erro:', erro.error.message);
+      next: (dados) => {
+        this.vetorMesas = [...dados];
+        this.cdr.detectChanges();
+      },  
+      error: (erro) => {
+        this.mensagemErro = erro.error.message;
+        this.vetorMesas = [];
+        console.log(
+          'Não foi possível localizar as mesas deste Funcionário -> ',
+          erro.error.message
+        );
       }
     });
 }
@@ -138,11 +139,10 @@ abrirModalCadastroMesa(){
      if (formulario){
         console.log('Enviando dados!');
         this.services.adicionarMesa(formulario.cdEmpresa, formulario.nrMesa, formulario.cdFuncionario).subscribe({
-          next:(dados)=>{              
+          next:(dados)=>{                  
               this.empresaFuncionarioSelecionado=formulario.cdEmpresa;
-              this.funcionarioSelecioando=formulario.cdFuncionario;  
-              
-              this.listarMesasFuncionario();
+              this.funcionarioSelecioando=formulario.cdFuncionario;               
+              this.listarMesasFuncionario();              
           },
           error:(erro)=>{
               console.log('Erro ao tentar adicionar uma mesa!',erro);
@@ -153,5 +153,9 @@ abrirModalCadastroMesa(){
        });
      }
     })
+}
+
+excluirMesa(nrMesa:number){
+    //Desenvolver método de exclusão na api
 }
 }
