@@ -11,7 +11,9 @@ export class MemesasServices {
   private urlMesasFuncionario='http://localhost:8081/mesa/garcom/';
   private urlAdicionarMesa='http://localhost:8081/mesa/adicionar/';
   private urlExcluirMesa='http://localhost:8081/mesa/excluir/';  
-
+  private urlAdicionaMesaIntervalo='http://localhost:8081/mesa/intervalo/';  
+  private urlTransfereMesa='http://localhost:8081/mesa/alterar/'; 
+ 
   constructor(private http:HttpClient){}
 
   listarMesaFuncionario(cdEmpresa:number, cdFuncionario:number):Observable<any>{    
@@ -20,6 +22,15 @@ export class MemesasServices {
 
   adicionarMesa(cdEmpresa:number, nrMesa:number, cdFuncionario:number):Observable<any>{
     return this.http.post<any>(this.urlAdicionarMesa+cdEmpresa+'/'+nrMesa+'/'+cdFuncionario,null);
+  }
+
+  adicionarMesaIntervalo(cdEmpresa:number, nrMesaInicial:number, nrMesaFinal:number, cdFuncionario:number ):Observable<any>{
+    return this.http.post<any>(this.urlAdicionaMesaIntervalo+cdEmpresa+'/'+nrMesaInicial+'/'+nrMesaFinal+'/'+cdFuncionario,null);
+  }
+
+  transgeferirMesa(cdEmpresa:number, nrMesa:number, cdNovoFuncionario:number ):Observable<any>{
+    console.log('Transferir url -> ',this.urlTransfereMesa+cdEmpresa+'/'+nrMesa+'/'+cdNovoFuncionario );
+    return this.http.post<any>(this.urlTransfereMesa+cdEmpresa+'/'+nrMesa+'/'+cdNovoFuncionario,null);
   }
 
   excluir(cdMesa:number):Observable<any>{

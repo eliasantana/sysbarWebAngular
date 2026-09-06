@@ -13,7 +13,8 @@ export interface ModalCadastroMesaInterface{
   nrMesa:number,
   mensagem:string,
   titulo:string,
-  intervalo:boolean
+  intervalo:boolean,
+  transferencia:boolean
 }
 export interface ModalCadastroMesaInterfaceOut{
   nrMesa:number
@@ -52,7 +53,9 @@ export class ModalCadasroMesa {
        this.formCadMesa= new FormGroup({
         cdEmpresa:new FormControl(this.data.cdEmpresaFuncionario),
         cdFuncionario:new FormControl(this.data.cdFuncionario),
-        nrMesa:new FormControl(this.data.nrMesa,[Validators.required, Validators.min(1)])
+        nrMesa:new FormControl(this.data.nrMesa,[Validators.required, Validators.min(1)]),
+        nrMesaFinal:new FormControl<number | null>(null),
+        cdNovoFuncionario:new FormControl<number | null >(null)
       });
   }
 

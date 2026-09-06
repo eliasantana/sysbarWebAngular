@@ -51,6 +51,8 @@ nrMesa!:number;
 mensagem:string='';
 tituloJanela:string='';
 exibeIntervalo:boolean=false;
+btnVisivel:boolean=false; //Controla a visibilidade dos botões de Cadastro
+exibetransferencia:boolean=false; //Controla a visibiliade do campo novoGarçom no modo de transferência
 
 //injeta o Modal
 private dialog = inject(MatDialog);
@@ -59,7 +61,9 @@ private dialog = inject(MatDialog);
 formulario=new FormGroup({
   cdFuncionario:new FormControl<number | null>(null),
   cdEmpresa:new FormControl(''),
-  nrMesa:new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+  nrMesa:new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
+  nrMesaFinal:new FormControl<number | null>(null),
+  cdNovoFuncionario:new FormControl<number | null >(null)
 });
 
 ngOnInit(){
@@ -105,6 +109,7 @@ selecionaEmpresa(cdEmpresa:number){
   this.empresaFuncionarioSelecionado=cdEmpresa;
   this.botaoListarDesabilitado=false;
   this.listarMesasFuncionario();
+  this.btnVisivel=true;
 }
 
 listarMesasFuncionario() {
@@ -119,7 +124,8 @@ listarMesasFuncionario() {
         console.log(
           'Não foi possível localizar as mesas deste Funcionário -> ',
           erro.error.message
-        );
+          );
+          this.btnVisivel=false;
       }
     });
 }
@@ -131,6 +137,10 @@ abrirModalCadastroMesa(modo:string){
   }else if(modo ==='I'){
       this.exibeIntervalo=false;
       this.tituloJanela='Cadastro de Mesas por Intervalo'; 
+  }else{
+    this.exibeIntervalo=true;
+    this.tituloJanela='Transferir Mesa para novo Garçom';
+    this.exibetransferencia=true; 
   }
 
   const dialogref = this.dialog.open(ModalCadasroMesa, {
@@ -142,13 +152,14 @@ abrirModalCadastroMesa(modo:string){
        cdEmpresaFuncionario:this.empresaFuncionarioSelecionado,
        nrMesa:null,
        mensagem:this.mensagem,
-       intervalo:this.exibeIntervalo
+       intervalo:this.exibeIntervalo,
+       transferencia:this.exibetransferencia
     }
   });
 
   dialogref.afterClosed().subscribe((formulario)=>{
+    console.log('Dados recebido pela confirmação ', formulario);
     if (modo==='C'){ //C - Cadastro | I - Intervalo      
-      console.log('Dados recebido pela confirmação ', formulario);
        if (formulario){
           console.log('Enviando dados!');
           this.services.adicionarMesa(formulario.cdEmpresa, formulario.nrMesa, formulario.cdFuncionario).subscribe({
@@ -165,8 +176,44 @@ abrirModalCadastroMesa(modo:string){
             }
          });
        }
+    }else if (modo==='I'){
+      //Mesas por Intervalo      
+      if (formulario){
+        console.log('Enviando dados!');
+        this.services.adicionarMesaIntervalo(formulario.cdEmpresa, formulario.nrMesa, formulario.nrMesaFinal,formulario.cdFuncionario).subscribe({
+          next:(dados)=>{                  
+              this.empresaFuncionarioSelecionado=formulario.cdEmpresa;
+              this.funcionarioSelecioando=formulario.cdFuncionario;               
+              this.listarMesasFuncionario();              
+          },
+          error:(erro)=>{
+              console.log('Erro ao tentar adicionar o intervalo de mesas!',erro);
+              this.mensagem=erro.error.message;
+              console.log('msg->',this.mensagem);
+              this.abrirModalCadastroMesa('I');
+          }
+       });
+     }
     }else{
-       console.log('Implementar Cadastro por intervalo ');
+      //Transferencia de mesa 
+      if (formulario){
+        console.log('Enviando dados!');
+        console.log('Formulário transferir ',formulario)
+        this.services.transgeferirMesa(formulario.cdEmpresa, formulario.nrMesa, formulario.cdNovoFuncionario).subscribe({
+          next:(dados)=>{                  
+              this.empresaFuncionarioSelecionado=formulario.cdEmpresa;
+              this.funcionarioSelecioando=formulario.cdFuncionario;               
+              this.listarMesasFuncionario();              
+          },
+          error:(erro)=>{
+              console.log('Erroao tentar transferir a mesa para o novo funcionário',erro);
+              this.mensagem=erro.error.message;
+              console.log('msg->',this.mensagem);
+              this.abrirModalCadastroMesa('T');
+          }
+       });
+     }
+       this.exibetransferencia=false;       
     }
     });
 }

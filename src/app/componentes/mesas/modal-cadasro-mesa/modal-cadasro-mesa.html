@@ -2,7 +2,7 @@
     <h2>{{data.titulo}}</h2>
 </div>
 <div class="container">
-    @if(data.intervalo){
+   
         <form class="formulario" [formGroup]="formCadMesa">
             <table>            
                 <tr>
@@ -21,11 +21,26 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <mat-form-field class="grande">
-                            <mat-label>Nr. Mesa</mat-label>
-                            <!-- (keyup)="habilitaBotao()"-->
+                        <mat-form-field class="medio">
+                            @if(!data.intervalo){
+                                <mat-label>Nr. Mesa Inicial</mat-label>
+                            }@else{
+                                <mat-label>Nr. Mesa</mat-label> 
+                            }
                             <input type="number" min="1" matInput formControlName="nrMesa"  (keyup)="limpaMensagem()">
-                        </mat-form-field> 
+                        </mat-form-field>
+                        @if(!data.intervalo){
+                            <mat-form-field class="medio">
+                                <mat-label>Nr. Mesa Final</mat-label>
+                                <input type="number" min="1" matInput formControlName="nrMesaFinal">
+                            </mat-form-field>                         
+                        }
+                        @if(data.transferencia){
+                            <mat-form-field class="medio">
+                                <mat-label>Cód. Novo Funcionário</mat-label>
+                                <input type="number" min="1" matInput formControlName="cdNovoFuncionario">
+                            </mat-form-field>                         
+                        }                        
                     </td>
                 </tr>
                 <tr>
@@ -44,8 +59,5 @@
                     </td>
                 </tr>
             </table> 
-        </form>
-    }@else {
-        implementar cadastro por intervalo
-    }
+        </form>    
 </div>

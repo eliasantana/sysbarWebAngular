@@ -21,15 +21,20 @@
         </mat-form-field>                   
       </div>
     </section>
-  </form>  
-  <div class="botoes">
-      <button type="button" matButton="elevated" class="btnListar" (click)="abrirModalCadastroMesa('C')">
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="table_restaurant"></mat-icon>Adicionar Mesa
-      </button>
-      <button type="button" matButton="elevated" class="btnListar" (click)="abrirModalCadastroMesa('I')">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="table_restaurant"></mat-icon>Intervalo
-    </button>                            
-  </div>
+  </form>
+  @if(btnVisivel){
+    <div class="botoes">
+        <button type="button" matButton="elevated" class="btnListar" (click)="abrirModalCadastroMesa('C')">
+            <mat-icon aria-hidden="false" aria-label="Adicionar Mesa" fontIcon="table_restaurant"></mat-icon>Adicionar Mesa
+        </button>
+        <button type="button" matButton="elevated" class="btnListar" (click)="abrirModalCadastroMesa('I')">
+          <mat-icon aria-hidden="false" aria-label="Intevarlo de Mesas" fontIcon="table_restaurant"></mat-icon>Intervalo
+        </button>                            
+        <button type="button" matButton="elevated" class="btnListar" (click)="abrirModalCadastroMesa('T')">
+          <mat-icon aria-hidden="false" aria-label="Transferir" fontIcon="transfer_within_a_station"></mat-icon>Transferir Mesa
+        </button>                            
+    </div>
+  }  
     @if(mensagemErro){
       <p>Atenção: {{mensagemErro}}</p>
     }
