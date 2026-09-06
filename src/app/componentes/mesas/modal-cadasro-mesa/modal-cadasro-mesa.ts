@@ -11,7 +11,9 @@ export interface ModalCadastroMesaInterface{
   nomeFuncionario:string,
   cdEmpresaFuncionario:number,
   nrMesa:number,
-  mensagem:string
+  mensagem:string,
+  titulo:string,
+  intervalo:boolean
 }
 export interface ModalCadastroMesaInterfaceOut{
   nrMesa:number

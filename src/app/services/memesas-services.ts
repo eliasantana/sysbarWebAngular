@@ -10,7 +10,7 @@ export class MemesasServices {
     
   private urlMesasFuncionario='http://localhost:8081/mesa/garcom/';
   private urlAdicionarMesa='http://localhost:8081/mesa/adicionar/';
-  ///mesa/adicionar/{idemplogada}/{nrmesa}/{idfuncionario}
+  private urlExcluirMesa='http://localhost:8081/mesa/excluir/';  
 
   constructor(private http:HttpClient){}
 
@@ -20,5 +20,9 @@ export class MemesasServices {
 
   adicionarMesa(cdEmpresa:number, nrMesa:number, cdFuncionario:number):Observable<any>{
     return this.http.post<any>(this.urlAdicionarMesa+cdEmpresa+'/'+nrMesa+'/'+cdFuncionario,null);
+  }
+
+  excluir(cdMesa:number):Observable<any>{
+    return this.http.delete<any>(this.urlExcluirMesa+cdMesa);
   }
 }

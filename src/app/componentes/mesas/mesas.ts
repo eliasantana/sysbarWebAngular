@@ -49,6 +49,8 @@ mensagemErro:string='';
 mesa:Mesa=new Mesa();
 nrMesa!:number;
 mensagem:string='';
+tituloJanela:string='';
+exibeIntervalo:boolean=false;
 
 //injeta o Modal
 private dialog = inject(MatDialog);
@@ -122,40 +124,63 @@ listarMesasFuncionario() {
     });
 }
 
-abrirModalCadastroMesa(){
+abrirModalCadastroMesa(modo:string){
+  if (modo==='C'){
+      this.exibeIntervalo=true;
+      this.tituloJanela='Cadastro de Mesas'; 
+  }else if(modo ==='I'){
+      this.exibeIntervalo=false;
+      this.tituloJanela='Cadastro de Mesas por Intervalo'; 
+  }
+
   const dialogref = this.dialog.open(ModalCadasroMesa, {
-    width:'600px',
-    height:'400px',
+    width:'500px',
+    height:'320px',
     data:{
-       titulo:'Cadastro de Mesas',
+       titulo:this.tituloJanela,
        cdFuncionario:this.funcionarioSelecioando,
        cdEmpresaFuncionario:this.empresaFuncionarioSelecionado,
        nrMesa:null,
-       mensagem:this.mensagem
+       mensagem:this.mensagem,
+       intervalo:this.exibeIntervalo
     }
   });
+
   dialogref.afterClosed().subscribe((formulario)=>{
-     console.log('Dados recebido pela confirmação ', formulario);
-     if (formulario){
-        console.log('Enviando dados!');
-        this.services.adicionarMesa(formulario.cdEmpresa, formulario.nrMesa, formulario.cdFuncionario).subscribe({
-          next:(dados)=>{                  
-              this.empresaFuncionarioSelecionado=formulario.cdEmpresa;
-              this.funcionarioSelecioando=formulario.cdFuncionario;               
-              this.listarMesasFuncionario();              
-          },
-          error:(erro)=>{
-              console.log('Erro ao tentar adicionar uma mesa!',erro);
-              this.mensagem=erro.error.message;
-              console.log('msg->',this.mensagem);
-              this.abrirModalCadastroMesa();
-          }
-       });
-     }
-    })
+    if (modo==='C'){ //C - Cadastro | I - Intervalo      
+      console.log('Dados recebido pela confirmação ', formulario);
+       if (formulario){
+          console.log('Enviando dados!');
+          this.services.adicionarMesa(formulario.cdEmpresa, formulario.nrMesa, formulario.cdFuncionario).subscribe({
+            next:(dados)=>{                  
+                this.empresaFuncionarioSelecionado=formulario.cdEmpresa;
+                this.funcionarioSelecioando=formulario.cdFuncionario;               
+                this.listarMesasFuncionario();              
+            },
+            error:(erro)=>{
+                console.log('Erro ao tentar adicionar uma mesa!',erro);
+                this.mensagem=erro.error.message;
+                console.log('msg->',this.mensagem);
+                this.abrirModalCadastroMesa('C');
+            }
+         });
+       }
+    }else{
+       console.log('Implementar Cadastro por intervalo ');
+    }
+    });
 }
 
-excluirMesa(nrMesa:number){
-    //Desenvolver método de exclusão na api
-}
+excluirMesa(cdMesa:number){
+    this.services.excluir(cdMesa).subscribe({
+      next:()=>{        
+        console.log("Mesa Excluída con sucesso!", cdMesa);
+        this.listarMesasFuncionario();
+      },
+      error:(erro)=>{
+        this.mensagemErro=erro.error.message;
+        console.log("Erro ao tentar excluir a mesa informada!", cdMesa);
+      }
+    });
+  }
 }
