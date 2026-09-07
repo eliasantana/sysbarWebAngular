@@ -1,0 +1,109 @@
+.titulo {
+  text-align: center;
+  margin: 20px 0;
+}
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 280px));
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;  
+}
+
+.cardmesa {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+
+  border-radius: 12px;
+  box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.15),
+      0 6px 12px rgba(0, 0, 0, 0.10);
+
+  transition: 
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+}
+.cardmesa:hover {
+  transform: translateY(-10px);
+
+  box-shadow:
+      0 5px 10px rgba(0, 0, 0, 0.30),
+      0 10px 20px rgba(0, 0, 0, 0.15);
+}
+.cardmesa img {
+width: 100%;
+height: 180px;
+object-fit: cover;
+display: block;
+}
+
+.cardmesa mat-card-header {
+padding-bottom: 10px;    
+}
+
+.cardmesa mat-card-content {
+padding-top: 10px;
+}
+
+::ng-deep .chip-livre {
+  background-color: green !important;
+}
+
+::ng-deep .chip-livre .mdc-evolution-chip__action--primary {
+  border: none !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .chip-livre .mdc-evolution-chip__action--primary::before {
+  border: none !important;
+}
+
+::ng-deep .chip-livre .mdc-evolution-chip__text-label {
+  color: white !important;
+}
+
+::ng-deep .chip-ocupada {
+  background-color: rgb(231, 72, 10) !important;
+}
+
+::ng-deep .chip-ocupada .mdc-evolution-chip__action--primary {
+  border: none !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .chip-ocupada .mdc-evolution-chip__action--primary::before {
+  border: none !important;
+}
+
+::ng-deep .chip-ocupada .mdc-evolution-chip__text-label {
+  color: white !important;
+}
+
+.cardmesa mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+}
+.medio{
+  width: 30%;
+  margin-left: 20px;;
+}
+.medio2{
+  width: 12%;
+}
+.medio3{
+  width: 17%;
+}
+.pequeno{
+  width: 10%;
+}
+.selecaogarcom{
+  margin-left: 152px;
+}
+.btnListar{
+margin-left: 10px;;
+}
+
