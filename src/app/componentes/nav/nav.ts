@@ -10,7 +10,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import { Topo } from "../topo/topo";
 import { Rodape } from '../rodape/rodape';
 import { LoginServices } from 'src/app/services/login-services';
-
+import { MatCardModule, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardFooter } from '@angular/material/card';
+import { MatChipSet, MatChip } from "@angular/material/chips";
 
 @Component({
   selector: 'app-nav',

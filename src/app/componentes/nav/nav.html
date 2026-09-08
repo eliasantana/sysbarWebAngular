@@ -30,6 +30,10 @@
         <a mat-list-item routerLink="/principal/mesas">
             <mat-icon matListItemIcon>table_bar</mat-icon>            
             <span matListItemTitle>Mesas</span>               
+        </a> 
+        <a mat-list-item routerLink="/principal/dashboard">
+            <mat-icon matListItemIcon>dashboard_2_gear</mat-icon>            
+            <span matListItemTitle>DashBoarding</span>               
         </a>          
         <a mat-list-item routerLink="/" (click)="logout()">
             <mat-icon matListItemIcon>exit_to_app</mat-icon>
@@ -43,7 +47,7 @@
                 <button type="button"  matButton="elevated"  (click)="drawer.toggle()">      
                     <mat-icon>menu</mat-icon> Menu        
                 </button>
-                <div class="logo"> <img src="logo.png"> </div>
+                <div class="logo"> <img src="logo.png"> </div>                
                 <router-outlet></router-outlet>
             </div>
         </div>

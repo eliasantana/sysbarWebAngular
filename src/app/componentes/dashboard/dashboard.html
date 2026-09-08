@@ -1,0 +1,110 @@
+<div class="dashboard">
+
+    <!-- Seleção da empresa -->
+    <div class="filtro-empresa">  
+      <mat-form-field appearance="outline" class="medio">
+        <mat-label>Empresa</mat-label>  
+        <mat-select (selectionChange)="getEstatistica($event.value)">
+            @for(empresa of empresas; track empresa.cdEmpresa){
+              <mat-option [value]="empresa.cdEmpresa">{{empresa.cdEmpresa}} - {{empresa.nomeEmpresa}}</mat-option>             
+            }
+        </mat-select>
+      </mat-form-field>
+  
+    </div>
+  
+  
+    <!-- Cards do Dashboard -->
+    <div class="cards-dashboard">  
+      <!-- Mesas ocupadas -->
+      <mat-card class="dashboard-card">  
+        <mat-card-content>  
+          <div class="card-header">
+            <span class="card-titulo">Mesas Ocupadas</span>
+          </div>  
+          <div class="card-valor">              
+              {{Estatistica.percentOcupada}}% 
+          </div>
+          <div class="card-footer">
+            <span class="percentual">
+              {{Estatistica.qtdOcupada}} de 
+            </span>
+            <span class="descricao">
+              {{Estatistica.qtdMesa}} 
+              mesas
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!-- Percentual ocupadas -->
+      <mat-card class="dashboard-card">
+        <mat-card-content>
+          <div class="card-header">
+            <span class="card-titulo">Ocupação</span>
+          </div>
+          <div class="card-valor">
+            {{Estatistica.qtdOcupada}}
+          </div>  
+          <div class="card-footer">
+            <span class="descricao">
+              mesas ocupadas
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!-- Percentual livres -->
+      <mat-card class="dashboard-card">
+        <mat-card-content>
+          <div class="card-header">
+            <span class="card-titulo">Mesas Livres</span>
+          </div>
+          <div class="card-valor">
+            {{Estatistica.percentLivre}}% Livres
+          </div>
+          <div class="card-footer">
+            <span class="percentual">
+               {{Estatistica.qtdLivre}}
+            </span>
+            <span class="descricao">
+              mesas disponíveis
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!-- Total de mesas -->
+      <mat-card class="dashboard-card">
+        <mat-card-content>
+          <div class="card-header">
+            <span class="card-titulo">Total de Mesas</span>
+          </div>
+          <div class="card-valor">
+            {{Estatistica.qtdMesa}}
+          </div>
+          <div class="card-footer">
+            <span class="descricao">
+              mesas cadastradas
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!-- Mesas livres -->
+      <mat-card class="dashboard-card">  
+        <mat-card-content>  
+          <div class="card-header">
+            <span class="card-titulo">Mesas Disponíveis</span>
+          </div>
+          <div class="card-valor">
+            {{Estatistica.qtdLivre}}
+          </div>
+          <div class="card-footer">
+            <span class="percentual">
+              {{Estatistica.percentLivre}}% Livre
+            </span>
+            <span class="descricao">
+              do total
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
