@@ -50,9 +50,13 @@
             <mat-chip-set aria-label="Fish selection">
               @if(mesa.status=='L'){
                 <mat-chip class="chip-livre">Livre</mat-chip>            
+                <button type="button" matButton="elevated" class="btnListar">
+                  <mat-icon aria-hidden="false" aria-label="Transferir" fontIcon="list_alt"></mat-icon>Abrir Pedido
+                </button>    
               }@else{
                 <mat-chip class="chip-ocupada">Ocupada</mat-chip>
-              }  
+                <div (change)="localizarPedido(mesa.nrMesa)"></div>
+              } 
             </mat-chip-set>            
           </mat-card-content>
           <mat-card-actions> 

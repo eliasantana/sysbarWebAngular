@@ -18,6 +18,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { convertCompilerOptionsFromJson } from 'typescript';
 import { MatIconModule, MatIcon } from '@angular/material/icon';
 import { ChangeDetectorRef } from '@angular/core';
+import { PedidoServices } from 'src/app/services/pedido-services';
 @Component({
   selector: 'app-mesas',
   standalone:true,
@@ -36,7 +37,8 @@ export class Mesas {
 constructor(private funcionarioServices:FuncionarioServices,
             private services:MemesasServices,
             private empresasServices:EmpresaServices,  
-            private cdr: ChangeDetectorRef){}
+            private cdr: ChangeDetectorRef,
+            private pedidoServices:PedidoServices){}
  
 vetorFuncionarios:Funcionario[]=[];
 vetorEmpresas:Empresa[]=[];
@@ -228,6 +230,18 @@ excluirMesa(cdMesa:number){
         this.mensagemErro=erro.error.message;
         console.log("Erro ao tentar excluir a mesa informada!", cdMesa);
       }
+    });
+  }
+
+  localizarPedido(nrMesa:number){
+     
+     this.pedidoServices.localizarPedido(this.empresaFuncionarioSelecionado, nrMesa).subscribe({
+        next:(pedido)=>{
+          console.log(pedido);
+        },
+        error:(erro)=>{
+          console.log('Erro ao tentar localizar o pedido');
+        }
     });
   }
 }
