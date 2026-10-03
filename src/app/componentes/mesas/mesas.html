@@ -49,13 +49,22 @@
           <mat-card-content>            
             <mat-chip-set aria-label="Fish selection">
               @if(mesa.status=='L'){
-                <mat-chip class="chip-livre">Livre</mat-chip>            
-                <button type="button" matButton="elevated" class="btnListar">
-                  <mat-icon aria-hidden="false" aria-label="Transferir" fontIcon="list_alt"></mat-icon>Abrir Pedido
-                </button>    
+                <mat-chip class="chip-livre">Livre</mat-chip>
+                <div class="example-button-row">
+                  <button type="button" matButton="elevated" class="btnListar" (click)="abrirPedido(mesa.cdMesa)">
+                    <mat-icon aria-hidden="false" aria-label="Transferir" fontIcon="list_alt"></mat-icon>Abrir Pedido
+                  </button>    
+                </div>            
               }@else{
                 <mat-chip class="chip-ocupada">Ocupada</mat-chip>
-                <div (change)="localizarPedido(mesa.nrMesa)"></div>
+                <div class="example-button-row">
+                  <button type="button" matButton="elevated" class="btnListar" [routerLink]="['/principal/pedido/',mesa.nrMesa]"> 
+                    <mat-icon aria-hidden="false" aria-label="Transferir" fontIcon="receipt_long"></mat-icon>Pedido
+                  </button> 
+                  <button type="button" matButton="elevated" class="btnListar" (click)="confirmar(mesa.cdMesa, mesa.nrMesa)"> 
+                    <mat-icon aria-hidden="false" aria-label="Transferir" fontIcon="receipt_long"></mat-icon>Cancelar
+                  </button>
+              </div>     
               } 
             </mat-chip-set>            
           </mat-card-content>

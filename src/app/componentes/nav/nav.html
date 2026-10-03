@@ -3,39 +3,39 @@
 <mat-drawer-container class="container" autosize>    
     <mat-drawer #drawer class="sidenav" mode="side">
       <mat-nav-list>    
-        <a mat-list-item routerLink="/principal">
+        <a mat-list-item routerLink="/principal" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>home</mat-icon>
             <span matListItemTitle>Home</span>
         </a>
-        <a mat-list-item routerLink="/principal/cargos">
+        <a mat-list-item routerLink="/principal/cargos" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>badge</mat-icon>
             <span matListItemTitle>Cargos</span>               
         </a>          
-        <a mat-list-item routerLink="/principal/empresa">
+        <a mat-list-item routerLink="/principal/empresa" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>apartment</mat-icon>
             <span matListItemTitle>Empresas</span>               
         </a>          
-        <a mat-list-item routerLink="/principal/funcionario">
+        <a mat-list-item routerLink="/principal/funcionario" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>group</mat-icon>
             <span matListItemTitle>Funcionários</span>               
         </a>          
-        <a mat-list-item routerLink="/principal/estoque">
+        <a mat-list-item routerLink="/principal/estoque" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>add_home_work</mat-icon>
             <span matListItemTitle>Estoque</span>               
         </a>          
-        <a mat-list-item routerLink="/principal/produto">
+        <a mat-list-item routerLink="/principal/produto" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>trolley</mat-icon>            
-            <span matListItemTitle>Produtos</span>               
+            <span matListItemTitle>Produtos</span >               
         </a> 
-        <a mat-list-item routerLink="/principal/mesas">
+        <a mat-list-item routerLink="/principal/mesas" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>table_bar</mat-icon>            
             <span matListItemTitle>Mesas</span>               
         </a> 
-        <a mat-list-item routerLink="/principal/dashboard">
+        <a mat-list-item routerLink="/principal/dashboard" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>dashboard_2_gear</mat-icon>            
             <span matListItemTitle>DashBoarding</span>               
         </a>
-        <a mat-list-item routerLink="/principal/dashboard">
+        <a mat-list-item routerLink="/principal/pedido" (click)="drawer.toggle()">
             <mat-icon matListItemIcon>receipt_long</mat-icon>            
             <span matListItemTitle>Pedidos</span>               
         </a>           

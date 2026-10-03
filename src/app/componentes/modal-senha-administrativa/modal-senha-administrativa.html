@@ -1,0 +1,23 @@
+<div class="titulo">
+    <h2>Liberação | Remover Produto</h2>
+</div>
+<div class="container">
+        <form class="formulario" [formGroup]="formulario">
+            <mat-form-field class="pequeno">
+                <mat-label>Código</mat-label>
+                <input matInput type="number" formControlName="codigo" >
+            </mat-form-field>
+            <mat-form-field class="grande">
+                <mat-label>senha</mat-label>
+                <input type="password" matInput formControlName="password">
+            </mat-form-field>
+        </form>    
+</div>
+<div class="mensagem">
+    {{data.mensagem}}
+</div>  
+<div class="botoes">
+    <button mat-raised-button color="primary" class="btn-adicionar" (click)="onCancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" class="btn-adicionar" (click)="onConfirmar()">Confirmar</button>
+</div>
+
