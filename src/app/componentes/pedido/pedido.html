@@ -1,0 +1,146 @@
+<div class="pagina">
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+         ========================= -->
+    <main class="conteudo">
+        <div class="titulo">
+            <h1>Detalhes do Pedido {{nrPedido}} Mesa {{nrMesa}}</h1>
+        </div>
+        <!-- Área de inclusão -->
+        <mat-card class="card-produto">
+            <div class="form-produto">  
+                <form [formGroup]="formulario">           
+                <!-- Código -->
+                <div class="pesquisa">
+                    <div class="campo codigo">
+                        <label>Código</label>
+                        <div class="campo-pesquisa">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" formControlName="cdProduto" (change)="getProduto()">
+                            </mat-form-field>
+                            <button mat-icon-button class="botao-pesquisa" type="button">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Produto -->
+                    <div class="campo produto">
+                        <label>Produto</label>
+                        <mat-form-field appearance="outline"  class="produto">
+                            <input matInput formControlName="dsProduto">
+                        </mat-form-field>
+                    </div>
+                    <div class="campo quantidade">
+                        <label>Qtd</label>
+                        <mat-form-field appearance="outline">
+                            <input matInput type="number" #campoQtd  min="1" formControlName="qtd">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button mat-raised-button color="primary" class="btn-adicionar" 
+                            [disabled]="formulario.invalid"
+                            (click)="adicionarItensAoPedido()">
+                            <mat-icon>add</mat-icon>
+                            Adicionar
+                        </button>
+                    </div>
+                   
+                </div>
+            </form>   
+        </div>
+        
+            <div>{{mensagem}}</div>
+        
+    </mat-card>
+        <div>            
+            <table mat-table [dataSource]="vetorItensPedido" class="mat-shadow-2">
+                <ng-container matColumnDef="cdProduto">
+                  <th mat-header-cell *matHeaderCellDef>Cod.</th>
+                  <td mat-cell *matCellDef="let item"> {{item.cdItemPedido}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dsProduto">
+                  <th mat-header-cell *matHeaderCellDef> Produto </th>
+                  <td mat-cell *matCellDef="let item"> {{item.dsProduto}} </td>
+                </ng-container>
+                <ng-container matColumnDef="qtd">
+                  <th mat-header-cell *matHeaderCellDef> Qtd </th>
+                  <td mat-cell *matCellDef="let item"> {{item.qtd}} </td>
+                </ng-container>
+                <ng-container matColumnDef="vlUnit">
+                  <th mat-header-cell *matHeaderCellDef> Vl.Unit </th>
+                  <td mat-cell *matCellDef="let item"> {{item.vlUnit | currency:'BRL':'symbol':'1.2-2':'pt-BR'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="total">
+                  <th mat-header-cell *matHeaderCellDef> Total </th>
+                  <td mat-cell *matCellDef="let item"> {{item.qtd * item.vlUnit | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}   </td>
+                </ng-container>
+                <ng-container matColumnDef="acao">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let item"> 
+                        <div class="example-button-row">
+                            <button matButton="elevated" (click)="autorizacao(item.cdItemPedido)">
+                                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+                                Remover 
+                            </button>
+                        </div>                            
+                    </td>
+                  </ng-container>
+                <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+                <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+              </table>
+        </div>
+        <mat-card>
+            <div class="total">
+                <span>Total do Pedido</span>
+                <strong>
+                    {{totalPedido | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+                </strong>                
+            </div>
+        </mat-card>
+    </main>
+    <!-- =========================
+         PAINEL LATERAL
+    ========================= -->
+    <aside class="painel-lateral">
+        <div class="informacao">
+            <span>Mesa</span>
+            <strong>{{nrMesa}}</strong>
+        </div>
+        <div class="informacao">
+            <span>Pedido</span>
+            <strong>{{nrPedido}}</strong>
+        </div>
+        <div class="informacao">
+            <span>Atendente</span>
+            <div>{{usuarioLogado?.nmFuncionario}}</div>
+        </div>
+        
+        <div class="menu-lateral">
+            <button mat-button>
+                <mat-icon>send</mat-icon>
+                <span>Reenvio Cozinha</span>
+            </button>
+            <button mat-button>
+                <mat-icon>ramen_dining</mat-icon>
+                <span>Status Cozinha</span>
+            </button>
+            <button mat-button>
+                <mat-icon>key</mat-icon>
+                <span>Alterar Senha</span>
+            </button>
+            <button mat-button>
+                <mat-icon>lock</mat-icon>
+                <span>Bloquear Tela</span>
+            </button>
+            <button mat-button>
+                <mat-icon>assignment</mat-icon>
+                <span>Gestão de Pedidos</span>
+            </button>
+            <button mat-button>
+                <mat-icon>restaurant</mat-icon>
+                <span>Cozinha</span>
+            </button>
+        </div>
+    </aside>
+</div>

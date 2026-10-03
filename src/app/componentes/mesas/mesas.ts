@@ -18,6 +18,10 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { convertCompilerOptionsFromJson } from 'typescript';
 import { MatIconModule, MatIcon } from '@angular/material/icon';
 import { ChangeDetectorRef } from '@angular/core';
+import { PedidoServices } from 'src/app/services/pedido-services';
+import { RouterLink } from '@angular/router';
+import { ConfirmeDialog } from 'src/app/confirme-dialog/confirme-dialog';
+import { Pedido } from '../pedido/pedido';
 @Component({
   selector: 'app-mesas',
   standalone:true,
@@ -26,7 +30,7 @@ import { ChangeDetectorRef } from '@angular/core';
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
-    ReactiveFormsModule, MatChipsModule, MatIconModule],
+    ReactiveFormsModule, MatChipsModule, MatIconModule, RouterLink],
   templateUrl: './mesas.html',
   styleUrl: './mesas.css',
 })
@@ -36,7 +40,8 @@ export class Mesas {
 constructor(private funcionarioServices:FuncionarioServices,
             private services:MemesasServices,
             private empresasServices:EmpresaServices,  
-            private cdr: ChangeDetectorRef){}
+            private cdr: ChangeDetectorRef,
+            private pedidoServices:PedidoServices){}
  
 vetorFuncionarios:Funcionario[]=[];
 vetorEmpresas:Empresa[]=[];
@@ -53,9 +58,11 @@ tituloJanela:string='';
 exibeIntervalo:boolean=false;
 btnVisivel:boolean=false; //Controla a visibilidade dos botões de Cadastro
 exibetransferencia:boolean=false; //Controla a visibiliade do campo novoGarçom no modo de transferência
+cdPedidoLocalizado:number=0;
 
 //injeta o Modal
 private dialog = inject(MatDialog);
+private confirmacao = inject(MatDialog);
 
 //Formulário cadastro de mesas
 formulario=new FormGroup({
@@ -79,7 +86,7 @@ listarFuncionarioCargo(){
         console.log('Funcionários retornados com sucesso!');
       },
       error:(erro)=>{
-        console.log('erro ao terntar localizar os funcionários pelo cargo informado', erro);
+        console.log('erro ao tentar localizar os funcionários pelo cargo informado', erro);
       }
     });
 }
@@ -100,7 +107,7 @@ selecionaFuncionario(cdFuncionario:number){
   this.funcionarioSelecioando=cdFuncionario; 
   console.log('Funcionário Selecionado -> ',this.funcionarioSelecioando)
   this.funcionarioSelecioando=cdFuncionario; 
-  this.mensagemErro='' ; 
+  this.limparMensagem();
   this.vetorMesas=[];   
 }
 
@@ -110,6 +117,7 @@ selecionaEmpresa(cdEmpresa:number){
   this.botaoListarDesabilitado=false;
   this.listarMesasFuncionario();
   this.btnVisivel=true;
+  this.limparMensagem();
 }
 
 listarMesasFuncionario() {
@@ -230,4 +238,59 @@ excluirMesa(cdMesa:number){
       }
     });
   }
+
+localizarPedido(nrMesa:number){
+   return this.pedidoServices.localizarPedido(this.empresaFuncionarioSelecionado, nrMesa);
+};
+
+  abrirPedido(cdMesa:number){
+      this.pedidoServices.criarPedido(this.empresaFuncionarioSelecionado, 
+                                      this.funcionarioSelecioando,cdMesa).subscribe({
+                                          next:(dados)=>{
+                                              console.log('Pedido Criado com Sucesso!');
+                                              this.listarMesasFuncionario();
+                                          },
+                                          error:(erro)=>{
+                                              console.log('Erro ao tentar criar o pedido!', erro.error.message);
+                                          }  
+                                      });
+  };
+ 
+  confirmar(cdMesa:number, nrMesa:number):void{
+    const dialogRef = this.confirmacao.open(ConfirmeDialog, {
+        width:'400px',
+        data:{
+          titulo:'Cancelamento',
+          mensagem:`Deseja realmente cancelar o pedido da mesa `+cdMesa + `?`
+        }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmado:boolean)=>{
+      if (confirmado){
+        this.localizarPedido(nrMesa).subscribe({
+            next:(pedido)=>{
+                this.cdPedidoLocalizado = pedido.cdPedido;
+                this.pedidoServices.cancelarPedido(this.empresaFuncionarioSelecionado, this.cdPedidoLocalizado).subscribe({
+                  next:(dados)=>{
+                    console.log('Pedido Cancelado com sucesso!');
+                    this.listarMesasFuncionario();   
+                  },
+                  error:(erro)=>{
+                    this.mensagemErro=erro.error.message;
+                    console.log('Erro ao tentar cancelar pedido', erro.error.message);
+                  }
+              }); 
+                
+            },
+            error:(erro)=>{
+              console.log('Erro ao tentar localizar o pedido');
+            }
+        });
+      }
+    });
+  }
+  limparMensagem(){
+    this.mensagemErro='';
+  }
+ 
 }

@@ -1,0 +1,401 @@
+* {
+    box-sizing: border-box;
+}
+
+.pagina {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background: #fdfdfd;
+    box-shadow: #444;
+}
+
+
+/* =================================
+     CONTEÚDO
+     ================================= */
+
+.conteudo {
+    flex: 1;
+    padding: 25px 35px;
+    min-width: 0;
+}
+
+.titulo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.titulo h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 500;
+    color: #222;
+}
+
+
+/* =================================
+     CARD PRODUTO
+     ================================= */
+
+.card-produto {
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #c7cdd4;
+    box-shadow: none;
+    background: #eef1f4;
+}
+
+
+/* =================================
+     FORMULÁRIO
+     ================================= */
+
+.form-produto {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+}
+
+
+/*
+ * O form está dentro do .form-produto.
+ * Por isso ele precisa ocupar o espaço
+ * disponível.
+ */
+.form-produto form {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* =================================
+     CAMPOS
+     ================================= */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+/* =================================
+     ÁREA DE PESQUISA
+     ================================= */
+
+.pesquisa {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+}
+
+
+/* =================================
+     CÓDIGO
+     ================================= */
+
+.codigo {
+    flex: 0 0 190px;
+}
+
+
+/* =================================
+     PRODUTO
+     ================================= */
+
+.produto {
+    flex: 1 1 auto;
+    min-width: 400px;
+}
+
+.produto mat-form-field {
+    width: 100%;
+}
+
+
+/* =================================
+     QUANTIDADE
+     ================================= */
+
+.quantidade {
+    flex: 0 0 80px;
+}
+
+
+/* =================================
+     PESQUISA DO CÓDIGO
+     ================================= */
+
+.campo-pesquisa {
+    display: flex;
+    align-items: center;
+}
+
+.campo-pesquisa mat-form-field {
+    width: 140px;
+}
+
+.botao-pesquisa {
+    width: 48px;
+    height: 48px;
+}
+
+.botao-pesquisa mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+}
+
+
+/* =================================
+     VALORES
+     ================================= */
+
+.valor {
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+    height: 120px;
+    justify-content: center;
+}
+
+.valor span {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.valor strong {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+
+/* =================================
+     BOTÃO
+     ================================= */
+
+.btn-adicionar {
+    top: 19px;
+    height: 56px;
+    white-space: nowrap;
+}
+
+
+/* =================================
+     TABELA
+     ================================= */
+
+.card-tabela {
+    margin-top: 12px;
+    padding: 0;
+    min-height: 480px;
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid #bfc5cb;
+    box-shadow: none;
+}
+
+.tabela {
+    width: 100%;
+    background: white;
+}
+
+.mat-mdc-header-cell {
+    background: #e5e9ed;
+    font-weight: 600;
+    font-size: 13px;
+    color: #333;
+    border-right: 1px solid #cbd0d5;
+}
+
+.mat-mdc-cell {
+    font-size: 14px;
+    border-right: 1px solid #e2e2e2;
+}
+
+.mat-mdc-row:hover {
+    background: #f5f7f9;
+}
+
+
+/* =================================
+     TOTAL
+     ================================= */
+
+.total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 25px;
+    border-top: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.total strong {
+    font-size: 20px;
+}
+
+
+/* =================================
+     PAINEL LATERAL
+     ================================= */
+
+.painel-lateral {
+    width: 180px;
+    min-width: 180px;
+
+    background: #f1f3f5;
+
+    border-left: 1px solid #c8cdd2;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =================================
+     INFORMAÇÕES
+     ================================= */
+
+.informacao {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    margin-top: 20px;
+}
+
+.informacao span {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.informacao strong {
+    font-size: 24px;
+    margin-top: 5px;
+}
+
+
+/* =================================
+     MENU
+     ================================= */
+
+.menu-lateral {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 10px;
+}
+
+.menu-lateral button {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #444;
+    border-radius: 4px;
+}
+
+.menu-lateral button:hover {
+    background: #dfe4e8;
+}
+
+.menu-lateral mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+}
+
+.menu-lateral span {
+    font-size: 12px;
+}
+
+
+/* =================================
+     RESPONSIVO
+     ================================= */
+
+@media (max-width: 1000px) {
+
+    .form-produto {
+        flex-wrap: wrap;
+    }
+
+    /*
+     * Quando a tela ficar menor,
+     * o produto pode diminuir.
+     */
+    .produto {
+        flex: 1 1 300px;
+        min-width: 300px;
+    }
+
+    .painel-lateral {
+        width: 130px;
+        min-width: 130px;
+    }
+}
+
+
+@media (max-width: 750px) {
+
+    .pagina {
+        flex-direction: column;
+    }
+
+    .conteudo {
+        padding: 15px;
+    }
+
+    .painel-lateral {
+        width: 100%;
+        min-width: 100%;
+
+        border-left: none;
+        border-top: 1px solid #ccc;
+    }
+
+    .menu-lateral {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .menu-lateral button {
+        width: 110px;
+    }
+
+    /*
+     * Em telas pequenas os campos
+     * podem quebrar para outra linha.
+     */
+    .pesquisa {
+        flex-wrap: wrap;
+    }
+
+    .produto {
+        flex: 1 1 300px;
+        min-width: 300px;
+    }
+    .mat-column-vlUnit,.mat-column-total {
+    text-align: right !important;
+}
+mat-icon{
+    color: red;
+}
+
+}

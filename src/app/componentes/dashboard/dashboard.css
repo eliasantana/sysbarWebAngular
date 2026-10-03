@@ -1,0 +1,102 @@
+.dashboard {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  /* =========================
+     COMBOBOX
+     ========================= */
+  
+  .filtro-empresa {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  .filtro-empresa mat-form-field {
+    width: 300px;
+  }
+  /* =========================
+     GRID DOS CARDS
+     ========================= */
+  
+  .cards-dashboard {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(220px, 1fr)
+    );
+    gap: 20px;
+    width: 100%;
+  }
+  
+  /* =========================
+     CARD
+     ========================= */
+  
+  .dashboard-card {
+    min-height: 145px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    background: white;
+  }
+  
+  /* =========================
+     CABEÇALHO
+     ========================= */
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+  
+    margin-bottom: 12px;
+  }
+  .card-titulo {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+  }
+  /* =========================
+     VALOR
+     ========================= */
+  .card-valor {
+    font-size: 28px;
+    font-weight: 600;
+  
+    color: #222;
+  
+    margin-bottom: 12px;
+  }
+  /* =========================
+     RODAPÉ
+     ========================= */
+  
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  
+    font-size: 12px;
+  }
+  
+  .percentual {
+    color: #2196f3;
+    font-weight: 600;
+  }
+  
+  .descricao {
+    color: #777;
+  }
+
+  .medio{
+    width: 50%;
+    margin-left: 20px;;
+  }
+  .medio2{
+    width: 12%;
+  }
+  .medio3{
+    width: 17%;
+  }
+  .pequeno{
+    width: 10%;
+  }
