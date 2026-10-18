@@ -9,7 +9,9 @@ body{
 }
 .example-container {
     background-image: url("https://png.pngtree.com/background/20230425/original/pngtree-bar-filled-with-glasses-and-bottles-picture-image_2475396.jpg");
-   
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: center; /* horizontal */
     align-items: center;     /* vertical */
