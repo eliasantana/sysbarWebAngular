@@ -9,13 +9,13 @@ import { Cargo } from '../modelo/Cargo';
 export class Service {
   
   //Url do EndPoint
-  private url:string='http://localhost:8081/cargo/listar';
+  private url:string='http://10.0.0.102:8081/cargo/listar';
 
-  private urlAdicionar:string='http://localhost:8081/cargo/adicionar';
+  private urlAdicionar:string='http://10.0.0.102:8081/cargo/adicionar';
 
-  private urlExcluir:string='http://localhost:8081/cargo/excluir/';
+  private urlExcluir:string='http://10.0.0.102:8081/cargo/excluir/';
 
-  private urlLocalizar:string='http://localhost:8081/cargo/listar/';
+  private urlLocalizar:string='http://10.0.0.102:8081/cargo/listar/';
 
 
 

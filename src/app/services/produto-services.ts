@@ -10,10 +10,10 @@ import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 })
 export class ProdutoServices {
 
-  private urlListarProduto='http://localhost:8081/produto/listar';
-  private urlAdicionarProduto='http://localhost:8081/produto';
-  private urlAlterarProduto='http://localhost:8081/produto/alterar';
-  private urlExcluirProduto='http://localhost:8081/produto/excluir/';
+  private urlListarProduto='http://10.0.0.102:8081/produto/listar';
+  private urlAdicionarProduto='http://10.0.0.102:8081/produto';
+  private urlAlterarProduto='http://10.0.0.102:8081/produto/alterar';
+  private urlExcluirProduto='http://10.0.0.102:8081/produto/excluir/';
   
   constructor(private http:HttpClient){}
    

@@ -8,11 +8,11 @@ import { Mesa } from '../modelo/Mesa';
 })
 export class MemesasServices {
     
-  private urlMesasFuncionario='http://localhost:8081/mesa/garcom/';
-  private urlAdicionarMesa='http://localhost:8081/mesa/adicionar/';
-  private urlExcluirMesa='http://localhost:8081/mesa/excluir/';  
-  private urlAdicionaMesaIntervalo='http://localhost:8081/mesa/intervalo/';  
-  private urlTransfereMesa='http://localhost:8081/mesa/alterar/'; 
+  private urlMesasFuncionario='http://10.0.0.102:8081/mesa/garcom/';
+  private urlAdicionarMesa='http://10.0.0.102:8081/mesa/adicionar/';
+  private urlExcluirMesa='http://10.0.0.102:8081/mesa/excluir/';  
+  private urlAdicionaMesaIntervalo='http://10.0.0.102:8081/mesa/intervalo/';  
+  private urlTransfereMesa='http://10.0.0.102:8081/mesa/alterar/'; 
  
   constructor(private http:HttpClient){}
 

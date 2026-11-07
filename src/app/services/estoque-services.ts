@@ -8,9 +8,9 @@ import { Estoque } from '../modelo/Estoque';
 })
 export class EstoqueServices {
 
-  urlAdicionar='http://localhost:8081/estoque/adicionar/';
-  urlListar='http://localhost:8081/estoque/listar/';
-  urlExcluir='http://localhost:8081/estoque/excluir/';
+  urlAdicionar='http://10.0.0.102:8081/estoque/adicionar/';
+  urlListar='http://10.0.0.102:8081/estoque/listar/';
+  urlExcluir='http://10.0.0.102:8081/estoque/excluir/';
   //estoque/excluir/{cdestoque}/{idemplocada}
 
   constructor(private http:HttpClient){}

@@ -12,7 +12,7 @@ import { ProdutoEstoque } from './componentes/produto-estoque/produto-estoque';
 import { Mesas } from './componentes/mesas/mesas';
 import { Dashboard } from './componentes/dashboard/dashboard';
 import { Pedido } from './componentes/pedido/pedido';
-import { Cozinha } from './componentes/cozinha/cozinha';
+import { CozinhaComponente } from './componentes/cozinha/cozinha';
 
 export const routes: Routes = [
     
@@ -30,7 +30,7 @@ export const routes: Routes = [
        {path:'mesas', component:Mesas},
        {path:'dashboard', component:Dashboard},
        {path:'pedido/:nrMesa', component:Pedido},
-       {path:'cozinha',component:Cozinha}
+       {path:'cozinha',component:CozinhaComponente}
      ]}
      
     
