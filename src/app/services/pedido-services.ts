@@ -11,12 +11,12 @@ import { ItemPedido } from '../modelo/ItPedido';
 export class PedidoServices {
   constructor(private http:HttpClient){}
 
-  urlLocalizarPedido='http://localhost:8081/pedido/localizarpedido/';
-  urlListarItensPedido='http://localhost:8081/pedido/itens/';
-  urlAdicionarItens='http://localhost:8081/pedido/incluir/';
-  urlRemoverItem='http://localhost:8081/pedido/remover/';
-  urlCriarPedido='http://localhost:8081/pedido/adicionar/';
-  urlCancelarPedido='http://localhost:8081/pedido/cancelar/';
+  urlLocalizarPedido='http://10.0.0.102:8081/pedido/localizarpedido/';
+  urlListarItensPedido='http://10.0.0.102:8081/pedido/itens/';
+  urlAdicionarItens='http://10.0.0.102:8081/pedido/incluir/';
+  urlRemoverItem='http://10.0.0.102:8081/pedido/remover/';
+  urlCriarPedido='http://10.0.0.102:8081/pedido/adicionar/';
+  urlCancelarPedido='http://10.0.0.102:8081/pedido/cancelar/';
   
   
 

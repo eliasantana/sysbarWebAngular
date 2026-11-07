@@ -9,9 +9,9 @@ import { ProdutoNoEstoque } from '../modelo/ProdutoNoEstoque';
 })
 export class ProdutoEstoqueServices {
 
-  urlAdicionarProdEstoque='http://localhost:8081/produto/adicionaestoque/';
-  urlGetProduto='http://localhost:8081/produto/listar/';
-  urlGetProdutoEStoque='http://localhost:8081/estoque/produtoestoque/';
+  urlAdicionarProdEstoque='http://10.0.0.102:8081/produto/adicionaestoque/';
+  urlGetProduto='http://10.0.0.102:8081/produto/listar/';
+  urlGetProdutoEStoque='http://10.0.0.102:8081/estoque/produtoestoque/';
 
   constructor(private http:HttpClient){}
 

@@ -8,10 +8,10 @@ import { Empresa } from '../modelo/Empresa';
 })
 export class EmpresaServices {
 
-  private urlAdicionar='http://localhost:8081/empresa/adicionar';
-  private urlListar='http://localhost:8081/empresa/listar';
-  private urlExcluir='http://localhost:8081/empresa/delete/';
-  private urlLocalizar='http://localhost:8081/empresa/';
+  private urlAdicionar='http://10.0.0.102:8081/empresa/adicionar';
+  private urlListar='http://10.0.0.102:8081/empresa/listar';
+  private urlExcluir='http://10.0.0.102:8081/empresa/delete/';
+  private urlLocalizar='http://10.0.0.102:8081/empresa/';
   
   constructor(private http:HttpClient){}
 

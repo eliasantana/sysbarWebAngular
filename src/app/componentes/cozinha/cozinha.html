@@ -1,0 +1,99 @@
+<div class="pagina">
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+         ========================= -->
+    <main class="conteudo">
+        <div class="titulo">
+            <h1>COZINHA</h1>
+        </div>
+        <!-- Área de inclusão -->
+        <mat-card class="card-produto">
+            <div class="hora">  
+              <mat-icon>schedule</mat-icon> {{horaAtual | date:'HH:mm:ss'}}
+            </div>
+        </mat-card>
+        <div>            
+            <table mat-table  class="mat-shadow-2" [dataSource]="vetorCozinha">
+                <ng-container matColumnDef="cdCozinha">
+                  <th mat-header-cell *matHeaderCellDef>Cod.</th>
+                  <td mat-cell *matCellDef="let item">{{item.cdCozinha}} </td>
+                </ng-container>
+                <ng-container matColumnDef="nrMesa">
+                    <th mat-header-cell *matHeaderCellDef> Mesa </th>
+                    <td mat-cell *matCellDef="let item">{{item.nrMesa}}</td>
+                  </ng-container>
+                <ng-container matColumnDef="cdProduto">
+                  <th mat-header-cell *matHeaderCellDef>Produto </th>
+                  <td mat-cell *matCellDef="let item">{{item.cdProduto}}</td>
+                </ng-container>                
+                <ng-container matColumnDef="nmPrato">
+                  <th mat-header-cell *matHeaderCellDef>Desc. Produto</th>
+                  <td mat-cell *matCellDef="let item"> {{item.nmPrato}} </td>
+                </ng-container>
+                <ng-container matColumnDef="horaSolicitacao">
+                  <th mat-header-cell *matHeaderCellDef>HR. Solic.</th>
+                  <td mat-cell *matCellDef="let item"> {{item.horaSolicitacao | date:'HH:mm:ss'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="horaPrepacacao">
+                  <th mat-header-cell *matHeaderCellDef>Hr.Prep.</th>
+                  <td mat-cell *matCellDef="let item"> {{item.horaPrepacacao | date:'HH:mm:ss'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="tempoPreparacao">
+                  <th mat-header-cell *matHeaderCellDef>Tempo Total</th>
+                  <td mat-cell *matCellDef="let item"> {{item.tempoPreparacao}} </td>
+                </ng-container>
+                <ng-container matColumnDef="nmFuncionario">
+                  <th mat-header-cell *matHeaderCellDef>Funcionario</th>
+                  <td mat-cell *matCellDef="let item">{{item.cdFuncionario}} - {{item.nmFuncionario}}</td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef >Status</th>
+                    <td mat-cell *matCellDef="let item">
+                        @if (item.status==='P') {
+                            Aguardando
+                        }@else if (item.status==='E'){
+                            Em Preparação
+                        }@else if (item.status==='L'){
+                            Liberado
+                        }
+
+                    </td>
+                  </ng-container>
+                <ng-container matColumnDef="observacao">
+                  <th mat-header-cell *matHeaderCellDef>Observação</th>
+                  <td mat-cell *matCellDef="let item">{{item.observacao}}</td>
+                </ng-container>
+                <ng-container matColumnDef="acao">
+                    <th mat-header-cell *matHeaderCellDef>Ação</th>
+                    <td mat-cell *matCellDef="let item"> 
+                        <div class="example-button-row">
+                            <button matButton="elevated">
+                                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+                                Remover 
+                            </button>
+                            <button matButton="elevated" (click)="preparar(item.cdCozinha)">
+                                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="history"></mat-icon>
+                                Preparar 
+                            </button>
+                            <button matButton="elevated" (click)="liberar(item.cdCozinha)">
+                                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="lock_open"></mat-icon>
+                                Liberar 
+                            </button>
+                        </div>                            
+                    </td>
+                  </ng-container>
+                <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+                <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+              </table>
+        </div>
+        <mat-card>
+            <div class="total">
+                <span></span>
+                <strong>
+                    MENSAGEM: {{msg}}
+                </strong>                
+            </div>
+        </mat-card>
+    </main>   
+</div>

@@ -8,7 +8,7 @@ import { Estatistica } from '../modelo/Estatistica';
 })
 export class DashboardServices {
 
-  urlEstatisticas:string='http://localhost:8081/estatistica/ocupacao/';
+  urlEstatisticas:string='http://10.0.0.102:8081/estatistica/ocupacao/';
   
   constructor(private http:HttpClient){}
 

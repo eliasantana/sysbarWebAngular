@@ -30,6 +30,13 @@ import { MatChipSet, MatChip } from "@angular/material/chips";
 export class Nav {
 
   constructor(private loginService:LoginServices){}
+  
+  public cargo:string | undefined = undefined;
+
+  ngOnInit(){
+    this.cargo=this.loginService.getCargo();
+    console.log('Cargo -> ', this.cargo);
+  }
 
   logout(){
     this.loginService.limparSessao();

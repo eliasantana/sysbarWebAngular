@@ -10,13 +10,13 @@ import { Funcionario } from '../componentes/funcionario/funcionario';
 export class FuncionarioServices {
 
   constructor(private http:HttpClient){}
-  urlFuncionarioEmpresa='http://localhost:8081/funcionario/listar/';
-  urlExcluir='http://localhost:8081/funcionario/excluir/'; 
-  urlLocalizarFuncionario='http://localhost:8081/funcionario/get/'; 
-  urlAdicionarFuncionario='http://localhost:8081/funcionario/adicionar/'; 
-  private urlTransferir='http://localhost:8081/funcionario/transferir/';
-  private urlPromover='http://localhost:8081/funcionario/promover/';
-  private urlFuncionarioCargo='http://localhost:8081/funcionario/getcargo/';
+  urlFuncionarioEmpresa='http://10.0.0.102:8081/funcionario/listar/';
+  urlExcluir='http://10.0.0.102:8081/funcionario/excluir/'; 
+  urlLocalizarFuncionario='http://10.0.0.102:8081/funcionario/get/'; 
+  urlAdicionarFuncionario='http://10.0.0.102:8081/funcionario/adicionar/'; 
+  private urlTransferir='http://10.0.0.102:8081/funcionario/transferir/';
+  private urlPromover='http://10.0.0.102:8081/funcionario/promover/';
+  private urlFuncionarioCargo='http://10.0.0.102:8081/funcionario/getcargo/';
     
   pesquisafuncionarioPorEmpresa(cdEmpresa:number):Observable<any>{
       return this.http.get<Funcionario>(this.urlFuncionarioEmpresa+cdEmpresa);

@@ -18,6 +18,8 @@ import { CurrencyPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalSenhaAdministrativa } from '../modal-senha-administrativa/modal-senha-administrativa';
 import { form } from '@angular/forms/signals';
+import { ServicesCozinha } from 'src/app/services/services-cozinha';
+import { ModalStatusCozinha } from './modal-status-cozinha/modal-status-cozinha';
 
 export interface DadosSenha{
   codigo:number,
@@ -37,7 +39,8 @@ export class Pedido {
 
   constructor(private services:PedidoServices, 
               private loginServices:LoginServices,
-              private produtoEstoque:ProdutoEstoqueServices){}
+              private produtoEstoque:ProdutoEstoqueServices,
+              private cozinhaServices:ServicesCozinha){}
   
   //Injetando o ActiveRoute para receber o parametro enviado na rota
   private route = inject(ActivatedRoute);
@@ -94,13 +97,6 @@ export class Pedido {
     this.totalPedido=0;
     this.services.listarItesnPedido(cdEmpresaLogada, nrMesa).subscribe({
         next:(item)=>{
-            console.log('Itens Retornados com sucesso!');
-            console.log(' Itens do Pedido -> ',item);
-            
-            console.log('Itens recebidos:', item);
-            console.log('Primeiro item:', item[0]);
-            console.log('cdItemPedido:', item[0]?.cdItemPedido);
-
             this.vetorItensPedido.data=[...item];
             for(const i of item){
                 this.totalPedido=this.totalPedido+i.total;
@@ -204,5 +200,24 @@ export class Pedido {
 
   }
 
-  
+  abrirModalStatusCozinha(){
+      const dialogRef = this.dialogRef.open(ModalStatusCozinha, {
+        width: '1000px',
+        maxWidth: '1000px',
+        height: '650px',
+        data:{
+          titulo:'',
+          mensagem:'',
+          cdEmpresa:this.cdEmpresaLogada,
+          nrMesa:this.nrMesa
+        }  
+      });
+
+      dialogRef.afterClosed().subscribe((confirmado:boolean)=>{
+          if (confirmado){
+              //Verificar a necessidade de chamar a api neste momento
+              console.log('Chamar api');
+          }
+      });
+  }
 }

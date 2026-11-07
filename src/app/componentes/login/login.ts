@@ -11,8 +11,20 @@ import { LoginServices } from 'src/app/services/login-services';
 import { Cargo } from 'src/app/modelo/Cargo';
 
 
-
-
+export interface UsuarioLogado {
+  cdEmpresa: number;
+  nmEmpresa: string;
+  endereco: string;
+  bairro: string;
+  cep: string;
+  cidade: string;
+  uf: string;
+  cnpj: string;
+  cdFuncionario: number;
+  nmFuncionario: string;
+  cdCargo: number;
+  dsCargo: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -30,6 +42,8 @@ export class Login {
 
   private loginBanco:string='123456';
   private passwordBanco:string='123456'
+  private usuario:UsuarioLogado | null=null;
+
   mensagem:string='';
 
   constructor(private route:Router, private services:LoginServices){}
@@ -53,7 +67,8 @@ export class Login {
           next:(login)=>{            
             this.services.adicionaNaSessao(login);
             console.log('Usuário autenticado com sucesso');
-            this.route.navigate(['principal'])
+            this.validaLoginPorCargo();
+            //this.route.navigate(['principal'])
           },error:(erro)=>{
               console.log('Erro ao solicitar o dado!',erro);
               this.mensagem='Usuário ou senha inválidos!';   
@@ -61,5 +76,14 @@ export class Login {
        });          
     }  
   }
+  //Valida o cargo selecionado e redireciona para a página específica
+  validaLoginPorCargo(){    
+    this.usuario = this.services.recuperaDaSessao();    
+    if (this.usuario?.dsCargo=='Cozinheiro'){
+      this.route.navigate(['principal/cozinha'])
+    }else{
+      this.route.navigate(['principal'])
+    }
 
+  }
 }

@@ -31,9 +31,12 @@ export interface EstoqueSelecionado{
 
 export class LoginServices {
 
-  private  urlAuth='http://localhost:8081/autentica';
+  //private  urlAuth='http://10.0.0.102:8081/autentica';
+  private  urlAuth='http://10.0.0.102:8081/autentica';
   
   private usuarioLogado='';
+  
+  private userLogado:UsuarioLogado| null=null;
 
   private estoqueSelecionado='';
 
@@ -71,8 +74,15 @@ export class LoginServices {
     sessionStorage.clear();
   }
 
+  getCargo(){
+     this.userLogado = this.recuperaDaSessao();
+     return this.userLogado?.dsCargo;
+  }
 
-
-
-  
+  getEmpresaLogada(){
+    return this.userLogado?.cdEmpresa;
+  }
+  getCdFuncionario(){
+    return this.userLogado?.cdFuncionario;
+  }
 }

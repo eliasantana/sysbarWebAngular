@@ -35,9 +35,9 @@
             <mat-icon matListItemIcon>dashboard_2_gear</mat-icon>            
             <span matListItemTitle>DashBoarding</span>               
         </a>
-        <a mat-list-item routerLink="/principal/pedido" (click)="drawer.toggle()">
-            <mat-icon matListItemIcon>receipt_long</mat-icon>            
-            <span matListItemTitle>Pedidos</span>               
+        <a mat-list-item routerLink="/principal/cozinha" (click)="drawer.toggle()">
+            <mat-icon matListItemIcon>soup_kitchen</mat-icon>            
+            <span matListItemTitle>Cozinha</span>               
         </a>           
         <a mat-list-item routerLink="/" (click)="logout()">
             <mat-icon matListItemIcon>exit_to_app</mat-icon>
@@ -47,11 +47,20 @@
     </mat-drawer>    
     <div class="sidenav-content">
         <div class="button-row">
-            <div class="flex-container">                
-                <button type="button"  matButton="elevated"  (click)="drawer.toggle()">      
-                    <mat-icon>menu</mat-icon> Menu        
-                </button>
-                <div class="logo"> <img src="logo.png"> </div>                
+            <div class="flex-container">  
+                <!--Exbibe opção para funcionário com cargo igual a garçom-->              
+                @if(cargo==='Cozinheiro'){
+                    <a mat-list-item routerLink="/" (click)="logout()">
+                        <mat-icon matListItemIcon>exit_to_app</mat-icon>
+                        <span matListItemTitle>Sair</span>               
+                    </a>
+                }                
+                @if(cargo!=='Cozinheiro'){
+                    <button type="button"  matButton="elevated"  (click)="drawer.toggle()">      
+                        <mat-icon>menu</mat-icon> Menu        
+                    </button>
+                    <div class="logo"> <img src="logo.png"> </div>      
+                }
                 <router-outlet></router-outlet>
             </div>
         </div>
